@@ -1,6 +1,7 @@
 package org.example.backend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.backend.exception.IdNotFoundException;
 import org.example.backend.model.Book;
 import org.example.backend.model.BookDto;
 import org.example.backend.repository.BookRepository;
@@ -25,24 +26,21 @@ public class BookService {
     }
 
     public Book getById(String id) {
-        return bookRepository.findById(id).orElse(null);
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException(id, "Book"));
     }
 
     public Book update(String id, BookDto bookDto) {
-        Book book = bookRepository.findById(id).orElse(null);
-        if (book != null) {
-            Book updated = bookDto.toBook(id, book.createdAt());
-            return bookRepository.save(updated);
-        }
-        return null;
+        Book book = this.getById(id);
+        Book updated = bookDto.toBook(id, book.createdAt());
+        return bookRepository.save(updated);
     }
 
-    public boolean delete(String id) {
-        if (bookRepository.existsById(id)) {
-            bookRepository.deleteById(id);
-            return true;
+    public void delete(String id) {
+        if (!bookRepository.existsById(id)) {
+            throw new IdNotFoundException(id, "Book");
         }
-        return false;
+        bookRepository.deleteById(id);
     }
 
 }
