@@ -1,4 +1,4 @@
-name: SonarQube
+name: SonarQube-Backend
 on:
   push:
     branches:
@@ -33,5 +33,5 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          working-directory: backend
+        working-directory: backend
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=malek15b_book-library-project_backend
