@@ -16,7 +16,7 @@ import static org.mockito.Mockito.verify;
 
 class BookServiceTest {
 
-    IdService idService =  mock(IdService.class);
+    IdService idService = mock(IdService.class);
     BookRepository bookRepository = mock(BookRepository.class);
     BookService service = new BookService(bookRepository, idService);
 
@@ -37,9 +37,9 @@ class BookServiceTest {
         //GIVEN
         String id = UUID.randomUUID().toString();
         when(bookRepository.existsById(id)).thenReturn(true);
-        // WHEN
+        //WHEN
         service.deleteById(id);
-        // THEN
+        //THEN
         verify(bookRepository).deleteById(id);
     }
 
@@ -59,10 +59,10 @@ class BookServiceTest {
         Book book = new Book(id, "Test", "Test", LocalDateTime.now());
         BookDto bookDto = new BookDto("Test updated", "Test updated");
         when(bookRepository.findById(id)).thenReturn(Optional.of(book));
-        // WHEN
+        //WHEN
         service.update(id, bookDto);
         Book updated = bookDto.toBook(id, book.createdAt());
-        // THEN
+        //THEN
         verify(bookRepository).save(updated);
     }
 
@@ -72,7 +72,7 @@ class BookServiceTest {
         String id = UUID.randomUUID().toString();
         BookDto bookDto = new BookDto("Test updated", "Test updated");
         when(bookRepository.findById(id)).thenReturn(Optional.empty());
-        // WHEN
-        assertThrows(IdNotFoundException.class, () ->  service.update(id, bookDto));
+        //WHEN
+        assertThrows(IdNotFoundException.class, () -> service.update(id, bookDto));
     }
 }
