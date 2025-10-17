@@ -19,7 +19,7 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Book save(BookDto bookDto) {
+    public Book add(BookDto bookDto) {
         Book book = bookDto.toBook(idService.randomId());
         bookRepository.save(book);
         return book;
@@ -36,7 +36,7 @@ public class BookService {
         return bookRepository.save(updated);
     }
 
-    public void delete(String id) {
+    public void deleteById(String id) {
         if (!bookRepository.existsById(id)) {
             throw new IdNotFoundException(id, "Book");
         }

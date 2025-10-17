@@ -22,7 +22,7 @@ public class BookController {
 
     @PostMapping
     public Book save(@RequestBody BookDto bookDto) {
-        return bookService.save(bookDto);
+        return bookService.add(bookDto);
     }
 
     @PutMapping("/{id}")
@@ -32,7 +32,7 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable String id) {
-        bookService.delete(id);
+        bookService.deleteById(id);
         return "Book with id " + id + " was deleted";
     }
 
