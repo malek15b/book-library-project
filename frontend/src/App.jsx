@@ -1,21 +1,25 @@
 import './App.css'
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import BookList from "./BookList.js";
+import MenuBar from "./MenuBar.js";
+import LoginPage from "./LoginPage.js";
+import BookEdit from "./BookEdit.js";
+import BookAdd from "./BookAdd.js";
 
 function App() {
 
-    const navigate = useNavigate();
     return (
         <>
-            <button onClick={() => navigate("/admin/books")}
-                    className="bg-white-600 text-gray px-6 py-2 rounded-lg shadow-md
-                    hover:bg-gray-600 hover:text-white
-                    transition-all">Login
-            </button>
-            <Routes>
-                <Route path={"/"}/>
-                <Route path={"/admin/books"} element={<BookList/>}/>
-            </Routes>
+            <MenuBar />
+            <div className="p-4 sm:ml-64">
+                <Routes>
+                    <Route path={"/admin"}/>
+                    <Route path={"/login"} element={<LoginPage/>}/>
+                    <Route path={"/admin/books/edit/:bookId"} element={<BookEdit/>}/>
+                    <Route path={"/admin/books/add"} element={<BookAdd/>}/>
+                    <Route path={"/admin/books"} element={<BookList/>}/>
+                </Routes>
+            </div>
         </>
     )
 }
