@@ -34,7 +34,7 @@
   padding: 2em;
 }
 
-button, a, input {
+button, a, input, select {
     outline: none;
 }
 

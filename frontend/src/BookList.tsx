@@ -24,8 +24,8 @@ export default function BookList() {
 
     return (
         <>
-            <div className="container mx-auto p-6">
-                <h1 className="text-2xl font-bold mb-4">
+            <div className="container mx-auto p-4">
+                <h1 className="text-2xl font-bold mb-4 h-10">
                     Bücher <span className="text-gray-500">({books.length})</span>
                 </h1>
                 <div className="flex justify-end mb-6">
@@ -39,10 +39,11 @@ export default function BookList() {
                     <table className="min-w-full text-left border-collapse">
                         <thead className="bg-gray-100 text-gray-700 text-sm">
                         <tr>
-                            <th className="px-6 py-3 w-1/4">Name</th>
-                            <th className="px-6 py-3 w-1/4">Autor</th>
+                            <th className="px-6 py-3">Name</th>
+                            <th className="px-6 py-3">Autor</th>
+                            <th className="px-6 py-3 w-1/8">Genre</th>
                             <th className="px-6 py-3">Erstellt am</th>
-                            <th className="px-6 py-3">Actions</th>
+                            <th className="px-6 py-3 w-1/5">Actions</th>
                         </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
@@ -50,6 +51,7 @@ export default function BookList() {
                             <tr className="hover:bg-gray-50" key={b.id}>
                                 <td className="px-6 py-3">{b.name}</td>
                                 <td className="px-6 py-3">{b.author}</td>
+                                <td className="px-6 py-3">{b.genre?.name}</td>
                                 <td className="px-6 py-3">{new Date(Date.parse(b.createdAt)).toLocaleString()} </td>
                                 <td className="px-6 py-3 font-medium">
                                     <Link to={`/admin/books/edit/${b.id}`}
