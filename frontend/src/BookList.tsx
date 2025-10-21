@@ -31,6 +31,7 @@ export default function BookList() {
                 <div className="flex justify-end mb-6">
                     <button className="btn-primary" onClick={() => navigate("/admin/books/add")}>Buch anlegen</button>
                 </div>
+                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
 
                 {books.length === 0 ? (
                     <p>Keine Bücher vorhanden.</p>
@@ -50,10 +51,12 @@ export default function BookList() {
                                 <td className="px-6 py-3">{b.name}</td>
                                 <td className="px-6 py-3">{b.author}</td>
                                 <td className="px-6 py-3">{new Date(Date.parse(b.createdAt)).toLocaleString()} </td>
-                                <td className="px-6 py-3">
+                                <td className="px-6 py-3 font-medium">
                                     <Link to={`/admin/books/edit/${b.id}`}
                                           className="text-blue-600 pr-2">Bearbeiten</Link>
-                                    <button onClick={() => deleteBook(b.id)} className="text-red-700">Löschen</button>
+                                    <button onClick={() => deleteBook(b.id)}
+                                            className="text-red-700 float-end">Löschen
+                                    </button>
                                 </td>
                             </tr>
                         ))
