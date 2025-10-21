@@ -3,12 +3,17 @@
 @tailwind utilities;
 
 .btn-primary {
-    @apply bg-white text-gray-800 px-6 py-2 rounded-lg shadow-md
-    hover:bg-blue-300 transition-all;
+    @apply bg-blue-700 text-white px-6 py-2 shadow-md
+    hover:bg-blue-600;
+}
+
+.btn-default {
+    @apply bg-white text-gray-800 px-6 py-2 shadow-md
+    hover:border-gray-700;
 }
 
 input {
     @apply bg-gray-50 border border-gray-300
-    text-gray-900 text-sm rounded-lg
+    text-gray-900 text-sm
     focus:ring-blue-500 focus:border-blue-600 block w-full p-2.5
 }
