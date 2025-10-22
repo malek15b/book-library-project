@@ -48,10 +48,10 @@ export default function BookEdit() {
     }
 
     function handelGenreChange(e: ChangeEvent<HTMLSelectElement>, genres: Genre[]) {
-        const {value} = e.target;
+        const {name, value} = e.target;
         setBook({
             ...book,
-            "genre": genres.filter((v) => value == v.id)[0]
+            [name]: value
         })
     }
 

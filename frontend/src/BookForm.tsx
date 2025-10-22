@@ -41,7 +41,7 @@ export default function BookForm(props: BookProps) {
                 <div className="mb-5">
                     <label htmlFor="genres"
                            className="block mb-2 font-medium text-gray-900 dark:text-white">Genre</label>
-                    <select id="genres" onChange={(e) => props.handelGenreChange(e, genres)} name={"genre"} value={book.genre?.id}
+                    <select id="genres" onChange={(e) => props.handelGenreChange(e, genres)} name={"genreId"} value={book.genreId}
                             className="appearance-none bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <option value="0">Genre auswählen</option>
                         {

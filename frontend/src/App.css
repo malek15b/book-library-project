@@ -41,3 +41,9 @@ button, a, input, select {
 .read-the-docs {
   color: #888;
 }
+
+.genre-color {
+    width: 25px;
+    height: 25px;
+    border: 5px solid #f3f4f6;
+}

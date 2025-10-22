@@ -39,10 +39,10 @@ export default function BookAdd() {
     }
 
     function handelGenreChange(e: ChangeEvent<HTMLSelectElement>, genres: Genre[]) {
-        const {value} = e.target;
+        const {name, value} = e.target;
         setBook({
             ...book,
-            "genre": genres.filter((v) => value == v.id)[0]
+            [name]: value
         })
     }
 
@@ -61,7 +61,7 @@ export default function BookAdd() {
                           handelSubmit={handelSubmit}
                           handelInputChange={handelInputChange}
                           handelGenreChange={handelGenreChange}
-                          formRef={formRef} />
+                          formRef={formRef}/>
             </div>
         </>
     )

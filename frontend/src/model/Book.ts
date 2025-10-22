@@ -4,6 +4,6 @@ export type Book = {
     id: string;
     name: string;
     author: string;
-    genre: Genre
+    genreId: string;
     createdAt: string;
 }
