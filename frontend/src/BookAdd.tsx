@@ -48,7 +48,7 @@ export default function BookAdd() {
 
     return (
         <>
-            <div className="container mx-auto p-4">
+            <div className="container mx-auto">
                 <h1 className="text-2xl font-bold mb-4 h-10">
                     Neues Buch anlegen
                 </h1>

@@ -24,7 +24,7 @@ export default function BookList() {
 
     return (
         <>
-            <div className="container mx-auto p-4">
+            <div className="container mx-auto">
                 <h1 className="text-2xl font-bold mb-4 h-10">
                     Bücher <span className="text-gray-500">({books.length})</span>
                 </h1>
@@ -42,7 +42,6 @@ export default function BookList() {
                             <th className="px-6 py-3">Name</th>
                             <th className="px-6 py-3">Autor</th>
                             <th className="px-6 py-3 w-1/8">Genre</th>
-                            <th className="px-6 py-3">Erstellt am</th>
                             <th className="px-6 py-3 w-1/5">Actions</th>
                         </tr>
                         </thead>
@@ -52,7 +51,6 @@ export default function BookList() {
                                 <td className="px-6 py-3">{b.name}</td>
                                 <td className="px-6 py-3">{b.author}</td>
                                 <td className="px-6 py-3">{b.genre?.name}</td>
-                                <td className="px-6 py-3">{new Date(Date.parse(b.createdAt)).toLocaleString()} </td>
                                 <td className="px-6 py-3 font-medium">
                                     <Link to={`/admin/books/edit/${b.id}`}
                                           className="text-blue-600 pr-2">Bearbeiten</Link>
