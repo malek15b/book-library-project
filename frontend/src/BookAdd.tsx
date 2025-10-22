@@ -13,7 +13,7 @@ export default function BookAdd() {
         id: "",
         name: "",
         author: "",
-        genre: null,
+        genreId: null,
         createdAt: ""
     });
 

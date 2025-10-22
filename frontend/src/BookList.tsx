@@ -23,11 +23,13 @@ export default function BookList() {
     }, []);
 
     function deleteBook(bookId: string) {
-        axios.delete(`/api/books/${bookId}`)
-            .then(() => {
-                setBooks(books.filter((b) => b.id !== bookId))
-            })
-            .catch(err => console.error(err));
+        if(confirm("Löschen?")) {
+            axios.delete(`/api/books/${bookId}`)
+                .then(() => {
+                    setBooks(books.filter((b) => b.id !== bookId))
+                })
+                .catch(err => console.error(err));
+        }
     }
 
     function getGenre(genreId: string) {
@@ -52,6 +54,7 @@ export default function BookList() {
                     <table className="min-w-full text-left border-collapse">
                         <thead className="bg-gray-100 text-gray-700 text-sm">
                         <tr>
+                            <th className="w-0.5"></th>
                             <th className="px-6 py-3">Name</th>
                             <th className="px-6 py-3">Autor</th>
                             <th className="px-6 py-3 w-1/8">Genre</th>
@@ -61,6 +64,7 @@ export default function BookList() {
                         <tbody className="divide-y divide-gray-200">
                         {books.map((b) => (
                             <tr className="hover:bg-gray-50" key={b.id}>
+                                <td style={{background: getGenre(b.genreId)?.color ?? "#FFF"}} className="pr-6 py-3"></td>
                                 <td className="px-6 py-3">{b.name}</td>
                                 <td className="px-6 py-3">{b.author}</td>
                                 <td className="px-6 py-3">{getGenre(b.genreId)?.name}</td>

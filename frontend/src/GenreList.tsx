@@ -14,11 +14,13 @@ export default function GenreList() {
     }, []);
 
     function deleteGenre(genreId: string) {
-        axios.delete(`/api/genres/${genreId}`)
-            .then(() => {
-                setGenres(genres.filter((b) => b.id !== genreId))
-            })
-            .catch(err => console.error(err));
+        if(confirm("Löschen?")) {
+            axios.delete(`/api/genres/${genreId}`)
+                .then(() => {
+                    setGenres(genres.filter((b) => b.id !== genreId))
+                })
+                .catch(err => console.error(err));
+        }
     }
 
     return (
@@ -28,7 +30,7 @@ export default function GenreList() {
                     Genres <span className="text-gray-500">({genres.length})</span>
                 </h1>
                 <div className="flex justify-end mb-6">
-                    <button className="btn-primary" onClick={() => navigate("/admin/books/add")}>Genre anlegen</button>
+                    <button className="btn-primary" onClick={() => navigate("/admin/genres/add")}>Genre anlegen</button>
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
 
