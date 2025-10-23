@@ -20,12 +20,11 @@ class BookServiceTest {
     IdService idService = mock(IdService.class);
     BookRepository bookRepository = mock(BookRepository.class);
     BookService service = new BookService(bookRepository, idService);
-    Genre genre = mock(Genre.class);
 
     @Test
     public void adBook_ShouldReturnBookWithId() {
         //GIVEN
-        BookDto bookDto = new BookDto("Test", "Test", genre);
+        BookDto bookDto = new BookDto("Test", "Test", null);
         String id = UUID.randomUUID().toString();
         when(idService.randomId()).thenReturn(id);
         //WHEN
@@ -58,8 +57,8 @@ class BookServiceTest {
     public void updateBook_ShouldBeSuccessful() {
         //GIVEN
         String id = UUID.randomUUID().toString();
-        Book book = new Book(id, "Test", "Test", genre, LocalDateTime.now());
-        BookDto bookDto = new BookDto("Test updated", "Test updated", genre);
+        Book book = new Book(id, "Test", "Test", null, LocalDateTime.now());
+        BookDto bookDto = new BookDto("Test updated", "Test updated", null);
         when(bookRepository.findById(id)).thenReturn(Optional.of(book));
         //WHEN
         service.update(id, bookDto);
@@ -72,7 +71,7 @@ class BookServiceTest {
     public void updateBook_ShouldBeFailed_WhenBookIsNotFound() {
         //GIVEN
         String id = UUID.randomUUID().toString();
-        BookDto bookDto = new BookDto("Test updated", "Test updated", genre);
+        BookDto bookDto = new BookDto("Test updated", "Test updated", null);
         when(bookRepository.findById(id)).thenReturn(Optional.empty());
         //WHEN
         assertThrows(IdNotFoundException.class, () -> service.update(id, bookDto));

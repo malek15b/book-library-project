@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
-    private final GenreRepository genreRepository;
     private final IdService idService;
 
     public List<Book> getAll() {
