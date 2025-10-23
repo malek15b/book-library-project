@@ -27,7 +27,7 @@ export default function GenreForm(props: GenreProps) {
                         Color</label>
                     <div className="flex">
                     <input value={genre.color ?? "#FFF"} onChange={props.handelInputChange} name={"color"} type="text" id="color"/>
-                    <div className="w-5 border border-0" style={{background: genre.color ?? "#FFF"}}></div>
+                    <div className="input-color" style={{background: genre.color ?? "#FFF"}}></div>
                     </div>
                 </div>
             </form>

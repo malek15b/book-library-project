@@ -39,7 +39,7 @@ export default function GenreAdd() {
         <>
             <div className="container mx-auto">
                 <h1 className="text-2xl font-bold mb-4 h-10">
-                    {genre.name}
+                    Neues Genre anlegen
                 </h1>
                 <div className="flex justify-end mb-6">
                     <button onClick={() => navigate("/admin/genres")} className="btn-default mr-3">Abbrechen</button>
