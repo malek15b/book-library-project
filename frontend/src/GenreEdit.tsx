@@ -1,47 +1,45 @@
+import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
-import {Book} from "./model/Book";
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Genre} from "./model/Genre";
-import BookForm from "./BookForm";
+import GenreForm from "./GenreForm";
 
-export default function BookAdd() {
-
+export default function GenreEdit() {
+    const {genreId} = useParams();
     const navigate = useNavigate();
     const formRef = useRef(null);
-    const [book, setBook] = useState<Book>({
+    const [genre, setGenre] = useState<Genre>({
         id: "",
         name: "",
-        author: "",
-        genreId: null,
+        color: null,
         createdAt: ""
     });
 
-    function postBook() {
-        axios.post("/api/books", book)
+    useEffect(() => {
+        axios.get(`/api/genres/${genreId}`)
+            .then(res => {
+                setGenre(res.data)
+            })
+            .catch(err => console.error(err));
+    }, [genreId]);
+
+    function putGenre() {
+        axios.put(`/api/genres/${genreId}`, genre)
             .then(() => {
-                navigate("/admin/books")
+                navigate("/admin/genres")
             })
             .catch(err => console.error(err));
     }
 
     function handelSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        postBook();
+        putGenre();
     }
 
     function handelInputChange(e: ChangeEvent<HTMLInputElement>) {
         const {name, value} = e.target;
-        setBook({
-            ...book,
-            [name]: value
-        })
-    }
-
-    function handelGenreChange(e: ChangeEvent<HTMLSelectElement>, genres: Genre[]) {
-        const {name, value} = e.target;
-        setBook({
-            ...book,
+        setGenre({
+            ...genre,
             [name]: value
         })
     }
@@ -50,18 +48,17 @@ export default function BookAdd() {
         <>
             <div className="container mx-auto">
                 <h1 className="text-2xl font-bold mb-4 h-10">
-                    Neues Buch anlegen
+                    {genre.name}
                 </h1>
                 <div className="flex justify-end mb-6">
-                    <button onClick={() => navigate("/admin/books")} className="btn-default mr-3">Abbrechen</button>
+                    <button onClick={() => navigate("/admin/genres")} className="btn-default mr-3">Abbrechen</button>
                     <button className="btn-primary" onClick={() => formRef.current.requestSubmit()}>Speichern</button>
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
-                <BookForm book={book}
+                <GenreForm genre={genre}
                           handelSubmit={handelSubmit}
                           handelInputChange={handelInputChange}
-                          handelGenreChange={handelGenreChange}
-                          formRef={formRef}/>
+                          formRef={formRef} />
             </div>
         </>
     )

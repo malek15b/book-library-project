@@ -9,7 +9,7 @@
 
 .btn-default {
     @apply bg-white text-gray-800 px-6 py-2 shadow-md font-medium
-    hover:bg-gray-50;
+    hover:bg-gray-50 border border-gray-100;
 }
 
 input {

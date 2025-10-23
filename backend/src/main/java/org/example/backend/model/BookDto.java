@@ -6,12 +6,13 @@ import java.time.LocalDateTime;
 
 @With
 public record BookDto(String name,
-                      String author) {
+                      String author,
+                      String genreId) {
     public Book toBook(String id) {
-        return new Book(id, name, author, LocalDateTime.now());
+        return new Book(id, name, author, genreId, LocalDateTime.now());
     }
 
     public Book toBook(String id, LocalDateTime createdAt) {
-        return new Book(id, name, author, createdAt);
+        return new Book(id, name, author, genreId, createdAt);
     }
 }

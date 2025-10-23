@@ -3,6 +3,7 @@ package org.example.backend.service;
 import org.example.backend.exception.IdNotFoundException;
 import org.example.backend.model.Book;
 import org.example.backend.model.BookDto;
+import org.example.backend.model.Genre;
 import org.example.backend.repository.BookRepository;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,7 @@ class BookServiceTest {
     @Test
     public void adBook_ShouldReturnBookWithId() {
         //GIVEN
-        BookDto bookDto = new BookDto("Test", "Test");
+        BookDto bookDto = new BookDto("Test", "Test", null);
         String id = UUID.randomUUID().toString();
         when(idService.randomId()).thenReturn(id);
         //WHEN
@@ -56,8 +57,8 @@ class BookServiceTest {
     public void updateBook_ShouldBeSuccessful() {
         //GIVEN
         String id = UUID.randomUUID().toString();
-        Book book = new Book(id, "Test", "Test", LocalDateTime.now());
-        BookDto bookDto = new BookDto("Test updated", "Test updated");
+        Book book = new Book(id, "Test", "Test", null, LocalDateTime.now());
+        BookDto bookDto = new BookDto("Test updated", "Test updated", null);
         when(bookRepository.findById(id)).thenReturn(Optional.of(book));
         //WHEN
         service.update(id, bookDto);
@@ -70,7 +71,7 @@ class BookServiceTest {
     public void updateBook_ShouldBeFailed_WhenBookIsNotFound() {
         //GIVEN
         String id = UUID.randomUUID().toString();
-        BookDto bookDto = new BookDto("Test updated", "Test updated");
+        BookDto bookDto = new BookDto("Test updated", "Test updated", null);
         when(bookRepository.findById(id)).thenReturn(Optional.empty());
         //WHEN
         assertThrows(IdNotFoundException.class, () -> service.update(id, bookDto));

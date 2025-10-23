@@ -5,6 +5,7 @@ import org.example.backend.exception.IdNotFoundException;
 import org.example.backend.model.Book;
 import org.example.backend.model.BookDto;
 import org.example.backend.repository.BookRepository;
+import org.example.backend.repository.GenreRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
