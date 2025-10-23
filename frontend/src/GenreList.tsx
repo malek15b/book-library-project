@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Genre} from "./model/Genre";
+import {Book} from "./model/Book";
 
 export default function GenreList() {
     const [genres, setGenres] = useState<Genre[]>([]);
@@ -9,7 +10,13 @@ export default function GenreList() {
 
     useEffect(() => {
         axios.get("/api/genres")
-            .then((res) => setGenres(res.data))
+            .then((res) => {
+                const sorted = res.data.sort(
+                    (a:Genre, b:Genre) =>
+                        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+                );
+                setGenres(res.data)
+            })
             .catch((err) => console.error("Error Loading:", err));
     }, []);
 

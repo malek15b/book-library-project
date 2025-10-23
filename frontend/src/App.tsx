@@ -11,6 +11,7 @@ import GenreAdd from "./GenreAdd.js";
 
 import axios from "axios";
 import {useEffect, useState} from "react";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 function App() {
 
@@ -41,32 +42,32 @@ function App() {
     }, []);
 
     return (
-        <>
-            <MenuBar />
-            <div className="p-4 sm:ml-64">
+        <Routes>
+            <Route path="/login" element={<LoginPage login={login} />} />
+            <Route path="/" element={<LoginPage login={login} />} />
 
-                <div>
-                    {!user ?
-                        <button className="btn-default" onClick={login}>Login</button>
-                        :
-                        <button className="btn-default" onClick={logout}>Logout</button>
+            <Route element={<ProtectedRoutes user={user} />}>
+                <Route
+                    path="/admin/*"
+                    element={
+                        <>
+                            <MenuBar logout={logout} />
+                            <div className="p-4 sm:ml-64">
+                                <Routes>
+                                    <Route path="books/edit/:bookId" element={<BookEdit />} />
+                                    <Route path="books/add" element={<BookAdd />} />
+                                    <Route path="books" element={<BookList />} />
+
+                                    <Route path="genres/edit/:genreId" element={<GenreEdit />} />
+                                    <Route path="genres/add" element={<GenreAdd />} />
+                                    <Route path="genres" element={<GenreList />} />
+                                </Routes>
+                            </div>
+                        </>
                     }
-                </div>
-
-                <Routes>
-                    <Route path={"/admin"}/>
-                    <Route path={"/login"} element={<LoginPage/>}/>
-
-                    <Route path={"/admin/books/edit/:bookId"} element={<BookEdit/>}/>
-                    <Route path={"/admin/books/add"} element={<BookAdd/>}/>
-                    <Route path={"/admin/books"} element={<BookList/>}/>
-
-                    <Route path={"/admin/genres/edit/:genreId"} element={<GenreEdit/>}/>
-                    <Route path={"/admin/genres/add"} element={<GenreAdd/>}/>
-                    <Route path={"/admin/genres"} element={<GenreList/>}/>
-                </Routes>
-            </div>
-        </>
+                />
+            </Route>
+        </Routes>
     )
 }
 

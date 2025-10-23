@@ -1,6 +1,10 @@
 import {Link} from "react-router-dom";
 
-export default function MenuBar() {
+type LogoutProps = {
+    logout: () => void
+}
+
+export default function MenuBar(props: LogoutProps) {
 
     return (
         <>
@@ -26,11 +30,11 @@ export default function MenuBar() {
                         </li>
                     </ul>
 
-                    <Link
-                        to={"/login"}
+                    <button
+                        onClick={props.logout}
                         className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100  group">
-                        <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
-                    </Link>
+                        <span className="ms-3 whitespace-nowrap">Logout</span>
+                    </button>
                 </div>
             </aside>
         </>
