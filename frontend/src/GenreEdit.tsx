@@ -44,6 +44,13 @@ export default function GenreEdit() {
         })
     }
 
+    function handelColorChange(color: string) {
+        setGenre({
+            ...genre,
+            color: color
+        })
+    }
+
     return (
         <>
             <div className="container mx-auto">
@@ -56,9 +63,10 @@ export default function GenreEdit() {
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
                 <GenreForm genre={genre}
-                          handelSubmit={handelSubmit}
-                          handelInputChange={handelInputChange}
-                          formRef={formRef} />
+                           handelSubmit={handelSubmit}
+                           handelInputChange={handelInputChange}
+                           handelColorChange={handelColorChange}
+                           formRef={formRef}/>
             </div>
         </>
     )

@@ -1,0 +1,26 @@
+type ActionsProps = {
+    edit : () => void
+    delete: () => void
+}
+
+export default function Actions(props: ActionsProps) {
+    return (
+        <>
+            <div className="flex gap-2 justify-end">
+                <button title="bearbeiten" onClick={props.edit} aria-label="Genre bearbeiten" className="inline-flex items-center justify-center p-2 rounded-lg hover:bg-gray-100
+                text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M4 20h4.586a1 1 0 0 0 .707-.293L19.414 9.586a2 2 0 0 0 0-2.828l-2.172-2.172a2 2 0 0 0-2.828 0L4.293 14.293A1 1 0 0 0 4 15V20z"/>
+                    </svg>
+                </button>
+
+                <button title="löschen" onClick={props.delete} aria-label="Genre löschen" className="inline-flex items-center justify-center p-2 rounded-lg hover:bg-red-50
+                text-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0 1 16.138 21H7.862a2 2 0 0 1-1.995-1.858L5 7m5 4v6m4-6v6M1 7h22M10 3h4a1 1 0 0 1 1 1v1H9V4a1 1 0 0 1 1-1z"/>
+                    </svg>
+                </button>
+            </div>
+        </>
+    )
+}
