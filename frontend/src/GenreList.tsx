@@ -57,7 +57,7 @@ export default function GenreList() {
                             <tr className="hover:bg-gray-50" key={g.id}>
                                 <td className="px-6 py-3">{g.name}</td>
                                 <td className="px-6 py-3">
-                                    <div className="genre-color" style={{background: g.color}}></div>
+                                    <div className="genre-color shadow-md" style={{background: g.color}}></div>
                                 </td>
                                 <td className="px-6 py-3 font-medium">
                                     <Link to={`/admin/genres/edit/${g.id}`}

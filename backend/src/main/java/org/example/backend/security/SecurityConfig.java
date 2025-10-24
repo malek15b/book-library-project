@@ -1,5 +1,6 @@
 package org.example.backend.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -13,20 +14,25 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Value("${HOST_FRONTEND}")
+    private String host;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/api/books").authenticated()
+                        .requestMatchers("/api/books/*").authenticated()
                         .requestMatchers("/api/genres").authenticated()
+                        .requestMatchers("/api/genres/*").authenticated()
                         .anyRequest().permitAll()
                 )
                 .exceptionHandling(exceptionHandlingConfigurer ->
                         exceptionHandlingConfigurer.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .logout(l -> l.logoutSuccessUrl("http://localhost:5173/login"))
+                .logout(l -> l.logoutSuccessUrl(host + "login"))
                 .oauth2Login(o -> o
-                        .defaultSuccessUrl("http://localhost:5173/admin/books", true));
+                        .defaultSuccessUrl(host + "admin/books", true));
         return http.build();
     }
 }

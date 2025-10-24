@@ -5,6 +5,7 @@ type GenreProps = {
     genre: Genre,
     handelSubmit: (event: FormEvent<HTMLFormElement>) => void,
     handelInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
+    handelColorChange: (color: string) => void,
     formRef: Ref<HTMLFormElement>
 }
 
@@ -25,9 +26,20 @@ export default function GenreForm(props: GenreProps) {
                     <label htmlFor="author"
                            className="block mb-2 font-medium text-gray-900 dark:text-white">
                         Color</label>
+                    <div className="flex gap-2 mb-3">
+                        {["#FF6B6B", "#4dd0e1", "#8bc34a", "#4D96FF", "#C77DFF","#ffeb3b","#9e9e9e"].map((color, i) => (
+                            <div
+                                key={i}
+                                className="w-6 h-6 rounded-full border cursor-pointer hover:scale-110 transition-transform"
+                                style={{ backgroundColor: color }}
+                                onClick={() => props.handelColorChange(color)}
+                            ></div>
+                        ))}
+                    </div>
                     <div className="flex">
-                    <input value={genre.color ?? "#FFF"} onChange={props.handelInputChange} name={"color"} type="text" id="color"/>
-                    <div className="input-color" style={{background: genre.color ?? "#FFF"}}></div>
+                        <input value={genre.color ?? "#FFF"} onChange={props.handelInputChange} name={"color"}
+                               type="text" id="color"/>
+                        <div className="input-color" style={{background: genre.color ?? "#FFF"}}></div>
                     </div>
                 </div>
             </form>

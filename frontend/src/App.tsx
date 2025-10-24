@@ -12,10 +12,11 @@ import GenreAdd from "./GenreAdd.js";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import ProtectedRoutes from "./ProtectedRoutes";
+import {appUser} from "./model/appUser";
 
 function App() {
 
-    const [user, setUser] = useState<string | null | undefined>(undefined)
+    const [user, setUser] = useState<appUser>(undefined)
 
     function login() {
         const host: string = window.location.host === "localhost:5173" ?
@@ -51,7 +52,7 @@ function App() {
                     path="/admin/*"
                     element={
                         <>
-                            <MenuBar logout={logout} />
+                            <MenuBar logout={logout} user={user} />
                             <div className="p-4 sm:ml-64">
                                 <Routes>
                                     <Route path="books/edit/:bookId" element={<BookEdit />} />

@@ -45,10 +45,14 @@ button, a, input, select {
 .genre-color {
     width: 25px;
     height: 25px;
-    border: 3px solid #bdbdbd;
+    border: 2px solid #eeeeee;
 }
 
 .input-color {
     width: 42px;
-    border: 3px solid #bdbdbd;
+    border: 2px solid #eeeeee;
+}
+
+.container {
+    min-width: 1200px;
 }

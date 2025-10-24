@@ -1,6 +1,7 @@
 package org.example.backend.security;
 
 import lombok.RequiredArgsConstructor;
+import org.example.backend.service.IdService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -14,11 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
-    private final AppUserRepository userRepository;
+    private final AppUserRepository appUserRepository;
+    private final IdService idService;
 
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
         OAuth2User oauthUser = super.loadUser(userRequest);
-        AppUser appUser = userRepository.findById(oauthUser.getName())
+        AppUser appUser = appUserRepository.findByUserId(oauthUser.getName())
                 .orElseGet(() -> createAndSaveUser(oauthUser));
 
         return new DefaultOAuth2User(List.of(new SimpleGrantedAuthority(appUser.role().name())),
@@ -27,11 +29,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private AppUser createAndSaveUser(OAuth2User oauthUser) {
         AppUser newUser = AppUser.builder()
-                .id(oauthUser.getName())
+                .id(idService.randomId())
+                .userId(oauthUser.getName())
                 .username(oauthUser.getAttribute("login"))
                 .role(Role.ADMIN)
                 .build();
 
-        return userRepository.save(newUser);
+        return appUserRepository.save(newUser);
     }
 }
