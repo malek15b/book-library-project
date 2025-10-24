@@ -3,6 +3,8 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Genre} from "./model/Genre";
 import {Book} from "./model/Book";
+import Actions from "./Actions";
+import {Navigate} from "react-router";
 
 export default function GenreList() {
     const [genres, setGenres] = useState<Genre[]>([]);
@@ -49,7 +51,7 @@ export default function GenreList() {
                         <tr>
                             <th className="px-6 py-3">Name</th>
                             <th className="px-6 py-3"></th>
-                            <th className="px-6 py-3 w-1/5">Actions</th>
+                            <th className="px-6 py-3 w-1/8"></th>
                         </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
@@ -57,14 +59,12 @@ export default function GenreList() {
                             <tr className="hover:bg-gray-50" key={g.id}>
                                 <td className="px-6 py-3">{g.name}</td>
                                 <td className="px-6 py-3">
-                                    <div className="genre-color shadow-md" style={{background: g.color}}></div>
+                                    <div className="w-6 h-6 rounded-full" style={{background: g.color}}></div>
                                 </td>
                                 <td className="px-6 py-3 font-medium">
-                                    <Link to={`/admin/genres/edit/${g.id}`}
-                                          className="text-blue-600 pr-2">Bearbeiten</Link>
-                                    <button onClick={() => deleteGenre(g.id)}
-                                            className="text-red-700 float-end">Löschen
-                                    </button>
+                                    <Actions
+                                        edit={() => navigate(`/admin/genres/edit/${g.id}`)}
+                                        delete={() => deleteGenre(g.id)} />
                                 </td>
                             </tr>
                         ))

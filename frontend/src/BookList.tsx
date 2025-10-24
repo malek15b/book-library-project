@@ -3,6 +3,7 @@ import {Book} from "./model/Book";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Genre} from "./model/Genre";
+import Actions from "./Actions";
 
 export default function BookList() {
 
@@ -64,7 +65,7 @@ export default function BookList() {
                             <th className="px-6 py-3">Name</th>
                             <th className="px-6 py-3">Autor</th>
                             <th className="px-6 py-3 w-1/8">Genre</th>
-                            <th className="px-6 py-3 w-1/5">Actions</th>
+                            <th className="px-6 py-3 w-1/8"></th>
                         </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
@@ -75,11 +76,9 @@ export default function BookList() {
                                 <td className="px-6 py-3">{b.author}</td>
                                 <td className="px-6 py-3">{getGenre(b.genreId)?.name}</td>
                                 <td className="px-6 py-3 font-medium">
-                                    <Link to={`/admin/books/edit/${b.id}`}
-                                          className="text-blue-600 pr-2">Bearbeiten</Link>
-                                    <button onClick={() => deleteBook(b.id)}
-                                            className="text-red-700 float-end">Löschen
-                                    </button>
+                                    <Actions
+                                        edit={() => navigate(`/admin/books/edit/${b.id}`)}
+                                        delete={() => deleteBook(b.id)} />
                                 </td>
                             </tr>
                         ))

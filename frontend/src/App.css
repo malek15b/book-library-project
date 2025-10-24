@@ -42,15 +42,12 @@ button, a, input, select {
   color: #888;
 }
 
-.genre-color {
-    width: 25px;
-    height: 25px;
-    border: 2px solid #eeeeee;
-}
-
 .input-color {
-    width: 42px;
-    border: 2px solid #eeeeee;
+    position: absolute;
+    top: 6px;
+    right: 7px;
+    width: 30px;
+    height: 30px;
 }
 
 .container {

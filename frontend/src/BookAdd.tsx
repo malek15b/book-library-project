@@ -50,7 +50,7 @@ export default function BookAdd() {
         <>
             <div className="container mx-auto">
                 <h1 className="text-2xl font-bold mb-4 h-10">
-                    Neues Buch anlegen
+                    Buch anlegen
                 </h1>
                 <div className="flex justify-end mb-6">
                     <button onClick={() => navigate("/admin/books")} className="btn-default mr-3">Abbrechen</button>
