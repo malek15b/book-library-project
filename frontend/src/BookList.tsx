@@ -9,6 +9,7 @@ export default function BookList() {
 
     const [books, setBooks] = useState<Book[]>([]);
     const [genres, setGenres] = useState<Genre[]>([]);
+    const [search, setSearch] = useState<string>("");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -50,7 +51,8 @@ export default function BookList() {
                 <h1 className="text-2xl font-bold mb-4 h-10">
                     Bücher <span className="text-gray-500">({books.length})</span>
                 </h1>
-                <div className="flex justify-end mb-6">
+                <div className="flex justify-between mb-6">
+                    <input onChange={(e) => setSearch(e.target.value)} placeholder="Suche eingeben.." className="w-1/2" value={search} name={"search"} type="text" id="search"/>
                     <button className="btn-primary" onClick={() => navigate("/admin/books/add")}>Buch anlegen</button>
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
@@ -59,7 +61,7 @@ export default function BookList() {
                     <p>Keine Bücher vorhanden.</p>
                 ) : (
                     <table className="min-w-full text-left border-collapse">
-                        <thead className="bg-gray-100 text-gray-700 text-sm">
+                        <thead className="bg-gray-100 text-gray-700">
                         <tr>
                             <th className="w-0.5"></th>
                             <th className="px-6 py-3">Name</th>
@@ -69,10 +71,14 @@ export default function BookList() {
                         </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
-                        {books.map((b) => (
+                        {books.filter(b =>
+                            b.name && b.name.toLowerCase().includes(search.toLowerCase()) ||
+                            b.author && b.author.toLowerCase().includes(search.toLowerCase()) ||
+                            getGenre(b.genreId)?.name && getGenre(b.genreId)?.name.toLowerCase().includes(search.toLowerCase())
+                        ).map((b) => (
                             <tr className="hover:bg-gray-50" key={b.id}>
                                 <td style={{background: getGenre(b.genreId)?.color ?? "#FFF"}} className="pr-6 py-3"></td>
-                                <td className="px-6 py-3">{b.name}</td>
+                                <td className="px-6 py-3 w-1/3">{b.name}</td>
                                 <td className="px-6 py-3">{b.author}</td>
                                 <td className="px-6 py-3">{getGenre(b.genreId)?.name}</td>
                                 <td className="px-6 py-3 font-medium">
