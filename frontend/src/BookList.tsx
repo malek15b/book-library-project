@@ -56,7 +56,6 @@ export default function BookList() {
                     <button className="btn-primary" onClick={() => navigate("/admin/books/add")}>Buch anlegen</button>
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
-
                 {books.length === 0 ? (
                     <p>Keine Bücher vorhanden.</p>
                 ) : (

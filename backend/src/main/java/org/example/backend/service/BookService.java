@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.backend.exception.IdNotFoundException;
 import org.example.backend.model.Book;
 import org.example.backend.model.BookDto;
+import org.example.backend.openLibrary.OpenLibraryResponse;
+import org.example.backend.openLibrary.OpenLibraryService;
 import org.example.backend.repository.BookRepository;
-import org.example.backend.repository.GenreRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 public class BookService {
     private final BookRepository bookRepository;
     private final IdService idService;
+    private final OpenLibraryService openLibraryService;
 
     public List<Book> getAll() {
         return bookRepository.findAll();
@@ -42,6 +44,10 @@ public class BookService {
             throw new IdNotFoundException(id, "Book");
         }
         bookRepository.deleteById(id);
+    }
+
+    public BookDto search(String isbn) {
+        return openLibraryService.findByISBN(isbn);
     }
 
 }
