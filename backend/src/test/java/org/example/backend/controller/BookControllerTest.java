@@ -1,12 +1,17 @@
 package org.example.backend.controller;
 
 import org.example.backend.model.Book;
+import org.example.backend.openLibrary.OpenLibraryService;
 import org.example.backend.repository.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureMockRestServiceServer;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -15,9 +20,13 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureMockRestServiceServer
 class BookControllerTest {
 
     @Autowired
@@ -25,6 +34,74 @@ class BookControllerTest {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private MockRestServiceServer mockServer;
+
+    @Test
+    void search_book_isbn_openLibrary() throws Exception {
+        String isbn = "3540412832";
+        String bookUrl = String.format(OpenLibraryService.BASE_URL + OpenLibraryService.BOOK_URL, isbn);
+
+        mockServer.expect(requestTo(bookUrl))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess("""
+                                   {
+                                     "ISBN:3540412832": {
+                                       "details": {
+                                         "title" : "Einführung in die Kryptographie Test",
+                                         "works": [
+                                           {
+                                             "key": "/works/OL8055353W"
+                                           }
+                                         ],
+                                         "subjects": [
+                                            "Kryptologie",
+                                            "Computer Science"
+                                         ]
+                                       }
+                                     }
+                                   }
+                                """,
+                        MediaType.APPLICATION_JSON));
+
+        String workUrl = OpenLibraryService.BASE_URL + "/works/OL8055353W" + ".json";
+        mockServer.expect(requestTo(workUrl))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess("""
+                                   {
+                                     "authors": [
+                                        {
+                                          "author": {"key": "/authors/OL2679922A"}
+                                        }
+                                     ]
+                                   }
+                                """,
+                        MediaType.APPLICATION_JSON));
+
+        String authorUrl = OpenLibraryService.BASE_URL + "/authors/OL2679922A" + ".json";
+        mockServer.expect(requestTo(authorUrl))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withSuccess("""
+                                   {
+                                   "name": "Johannes Buchmann"
+                                   }
+                                """,
+                        MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/books/search?isbn=" + isbn))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().json(
+                        """
+                                {
+                                name: "Einführung in die Kryptographie Test",
+                                author : "Johannes Buchmann",
+                                subjects: ["Kryptologie", "Computer Science"]
+                                }
+                                """
+                ));
+
+    }
 
     @Test
     @WithMockUser

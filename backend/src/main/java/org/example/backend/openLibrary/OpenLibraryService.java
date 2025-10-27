@@ -11,8 +11,8 @@ import java.util.Map;
 @Service
 public class OpenLibraryService {
 
-    private static final String BASE_URL = "https://openlibrary.org";
-    private static final String BOOK_URL = "/api/books?bibkeys=ISBN:%s&jscmd=details&format=json";
+    public static final String BASE_URL = "https://openlibrary.org";
+    public static final String BOOK_URL = "/api/books?bibkeys=ISBN:%s&jscmd=details&format=json";
     private final RestClient restClient;
 
     public OpenLibraryService(RestClient.Builder restClientBuilder) {
