@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.backend.exception.IdNotFoundException;
 import org.example.backend.model.Book;
 import org.example.backend.model.BookDto;
+import org.example.backend.openLibrary.BookResponse;
 import org.example.backend.openLibrary.OpenLibraryResponse;
 import org.example.backend.openLibrary.OpenLibraryService;
 import org.example.backend.repository.BookRepository;
@@ -46,7 +47,7 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
-    public BookDto search(String isbn) {
+    public BookResponse search(String isbn) {
         return openLibraryService.findByISBN(isbn);
     }
 

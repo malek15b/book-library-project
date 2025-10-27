@@ -67,6 +67,7 @@ export default function BookEdit() {
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
                 <BookForm book={book}
+                          setBookResponse={null}
                           handelSubmit={handelSubmit}
                           handelInputChange={handelInputChange}
                           handelGenreChange={handelGenreChange}

@@ -1,5 +1,5 @@
 #root {
-  padding: 2rem;
+    min-height: 100vh;
 }
 
 .logo {
@@ -46,8 +46,8 @@ button, a, input, select {
     position: absolute;
     top: 6px;
     right: 7px;
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
 }
 
 .container {

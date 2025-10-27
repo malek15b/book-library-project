@@ -3,6 +3,7 @@ package org.example.backend.controller;
 import lombok.AllArgsConstructor;
 import org.example.backend.model.Book;
 import org.example.backend.model.BookDto;
+import org.example.backend.openLibrary.BookResponse;
 import org.example.backend.openLibrary.OpenLibraryResponse;
 import org.example.backend.service.BookService;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,7 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public BookDto findByISBN(@RequestParam String isbn) {
+    public BookResponse findByISBN(@RequestParam String isbn) {
         return bookService.search(isbn);
     }
 }

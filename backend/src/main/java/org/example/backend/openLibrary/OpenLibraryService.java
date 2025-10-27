@@ -1,6 +1,5 @@
 package org.example.backend.openLibrary;
 
-import org.example.backend.model.BookDto;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -22,7 +21,7 @@ public class OpenLibraryService {
                 .build();
     }
 
-    public BookDto findByISBN(String isbn) {
+    public BookResponse findByISBN(String isbn) {
         String uri = String.format(BOOK_URL, isbn);
 
         Map<String, OpenLibraryResponse> response = this.restClient.get()
@@ -41,10 +40,10 @@ public class OpenLibraryService {
         List<String> authors = this.fetchAuthorsFromWork(work.key());
         if (authors.isEmpty()) return null;
 
-        return new BookDto(
+        return new BookResponse(
                 details.title(),
                 authors.getFirst(),
-                null
+                details.subjects()
         );
 
     }
