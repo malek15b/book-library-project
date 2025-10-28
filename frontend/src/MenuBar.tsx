@@ -16,7 +16,7 @@ export default function MenuBar(props: LogoutProps) {
                 <div
                     className="font-medium h-full flex flex-col justify-between px-3 py-4 overflow-y-auto bg-gray-50">
                     <div className="border-b-gray-200 text-blue-600 border-b p-2 ms-3 mb-10 whitespace-nowrap">
-                        Bibliothek
+                        BookLibrary
                     </div>
                     <ul className="space-y-2">
                         <li>

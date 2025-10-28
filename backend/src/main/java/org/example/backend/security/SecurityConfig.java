@@ -22,6 +22,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(a -> a
+                        .requestMatchers("/api/books/search").permitAll()
                         .requestMatchers("/api/books").authenticated()
                         .requestMatchers("/api/books/*").authenticated()
                         .requestMatchers("/api/genres").authenticated()

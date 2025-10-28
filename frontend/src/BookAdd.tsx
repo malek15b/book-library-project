@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Genre} from "./model/Genre";
 import BookForm from "./BookForm";
+import {BookResponse} from "./model/BookResponse";
 
 export default function BookAdd() {
 
@@ -46,6 +47,14 @@ export default function BookAdd() {
         })
     }
 
+    function setBookResponse(bookResponse: BookResponse) {
+        setBook({
+            ...book,
+            name: bookResponse.name,
+            author: bookResponse.author
+        })
+    }
+
     return (
         <>
             <div className="container mx-auto">
@@ -58,6 +67,7 @@ export default function BookAdd() {
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
                 <BookForm book={book}
+                          setBookResponse={setBookResponse}
                           handelSubmit={handelSubmit}
                           handelInputChange={handelInputChange}
                           handelGenreChange={handelGenreChange}

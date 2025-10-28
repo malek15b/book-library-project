@@ -3,7 +3,7 @@ package org.example.backend.service;
 import org.example.backend.exception.IdNotFoundException;
 import org.example.backend.model.Book;
 import org.example.backend.model.BookDto;
-import org.example.backend.model.Genre;
+import org.example.backend.openLibrary.OpenLibraryService;
 import org.example.backend.repository.BookRepository;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,8 @@ class BookServiceTest {
 
     IdService idService = mock(IdService.class);
     BookRepository bookRepository = mock(BookRepository.class);
-    BookService service = new BookService(bookRepository, idService);
+    BookService service = new BookService(bookRepository, idService, null);
+    OpenLibraryService openLibraryService = mock(OpenLibraryService.class);
 
     @Test
     public void adBook_ShouldReturnBookWithId() {

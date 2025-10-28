@@ -53,7 +53,7 @@ function App() {
                     element={
                         <>
                             <MenuBar logout={logout} user={user} />
-                            <div className="p-4 sm:ml-64">
+                            <div className="p-5 sm:ml-64 bg-white h-full">
                                 <Routes>
                                     <Route path="books/edit/:bookId" element={<BookEdit />} />
                                     <Route path="books/add" element={<BookAdd />} />
