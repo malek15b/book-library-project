@@ -13,6 +13,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import ProtectedRoutes from "./ProtectedRoutes";
 import {appUser} from "./model/appUser";
+import MemberList from "./MemberList";
 
 function App() {
 
@@ -62,6 +63,8 @@ function App() {
                                     <Route path="genres/edit/:genreId" element={<GenreEdit />} />
                                     <Route path="genres/add" element={<GenreAdd />} />
                                     <Route path="genres" element={<GenreList />} />
+
+                                    <Route path="members" element={<MemberList />} />
                                 </Routes>
                             </div>
                         </>

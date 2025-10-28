@@ -1,5 +1,7 @@
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {appUser} from "./model/appUser";
+import {useState} from "react";
+import {Book} from "./model/Book";
 
 type LogoutProps = {
     logout: () => void,
@@ -7,6 +9,13 @@ type LogoutProps = {
 }
 
 export default function MenuBar(props: LogoutProps) {
+
+    const location = useLocation();
+
+    const isActive = (path: string) => {
+        return location.pathname === path;
+    };
+
 
     return (
         <>
@@ -22,15 +31,22 @@ export default function MenuBar(props: LogoutProps) {
                         <li>
                             <Link
                                 to={"/admin/books"}
-                                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group">
+                                className={`${isActive("/admin/books") ? "active " : ""} flex items-center p-2 text-gray-900 rounded-lg hover:bg-blue-50 group`}>
                                 <span className="flex-1 ms-3 whitespace-nowrap">Bücher</span>
                             </Link>
                         </li>
                         <li>
                             <Link
                                 to={"/admin/genres"}
-                                className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100 group">
+                                className={`${isActive("/admin/genres") ? "active " : ""} flex items-center p-2 text-gray-900 rounded-lg hover:bg-blue-50 group`}>
                                 <span className="ms-3 whitespace-nowrap">Genres</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                to={"/admin/members"}
+                                className={`${isActive("/admin/members") ? "active " : ""} flex items-center p-2 text-gray-900 rounded-lg hover:bg-blue-50 group`}>
+                                <span className="ms-3 whitespace-nowrap">Mitglieder</span>
                             </Link>
                         </li>
                     </ul>
