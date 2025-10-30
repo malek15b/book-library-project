@@ -48,7 +48,7 @@ public class BookService {
     }
 
     public BookResponse search(String isbn) {
-        return openLibraryService.findByISBN(isbn);
+        return openLibraryService.findByISBN(isbn.trim());
     }
 
 }
