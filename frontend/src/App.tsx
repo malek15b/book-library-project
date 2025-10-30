@@ -14,6 +14,8 @@ import {useEffect, useState} from "react";
 import ProtectedRoutes from "./ProtectedRoutes";
 import {appUser} from "./model/appUser";
 import MemberList from "./MemberList";
+import MemberEdit from "./MemberEdit";
+import MemberAdd from "./MemberAdd";
 
 function App() {
 
@@ -65,6 +67,8 @@ function App() {
                                     <Route path="genres" element={<GenreList />} />
 
                                     <Route path="members" element={<MemberList />} />
+                                    <Route path="members/edit/:memberId" element={<MemberEdit />} />
+                                    <Route path="members/add" element={<MemberAdd />} />
                                 </Routes>
                             </div>
                         </>

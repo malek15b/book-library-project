@@ -5,6 +5,7 @@ import org.example.backend.exception.IdNotFoundException;
 import org.example.backend.model.Member;
 import org.example.backend.model.MemberDto;
 import org.example.backend.repository.MemberRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class MemberService {
     private final IdService idService;
 
     public List<Member> getAll() {
-        return memberRepository.findAll();
+        return memberRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public Member add(MemberDto memberDto) {

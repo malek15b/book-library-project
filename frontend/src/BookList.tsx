@@ -15,11 +15,7 @@ export default function BookList() {
     useEffect(() => {
         axios.get("/api/books")
             .then((res) => {
-                const sorted = res.data.sort(
-                    (a:Book, b:Book) =>
-                        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                );
-                setBooks(sorted)
+                setBooks(res.data)
             })
             .catch((err) => console.error("Error Loading:", err));
     }, []);

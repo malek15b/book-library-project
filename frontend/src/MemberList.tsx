@@ -38,6 +38,7 @@ export default function MemberList() {
                 </h1>
                 <div className="flex justify-between mb-6">
                     <input onChange={(e) => setSearch(e.target.value)} placeholder="Suche eingeben.." className="w-1/2" value={search} name={"search"} type="text" id="search"/>
+                    <button className="btn-primary" onClick={() => navigate("/admin/members/add")}>Mitglied anlegen</button>
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
                 {members.length === 0 ? (
@@ -56,7 +57,11 @@ export default function MemberList() {
                         </thead>
                         <tbody className="divide-y divide-gray-200">
                         {
-                            members.map((m) => (
+                            members.filter(m =>
+                                m.firstname && m.firstname.toLowerCase().includes(search.toLowerCase()) ||
+                                m.lastname && m.lastname.toLowerCase().includes(search.toLowerCase()) ||
+                                m.email && m.email.toLowerCase().includes(search.toLowerCase())
+                            ).map((m) => (
                             <tr className="hover:bg-gray-50" key={m.id}>
                                 <td className="px-6 py-3">{m.firstname}</td>
                                 <td className="px-6 py-3">{m.lastname}</td>
