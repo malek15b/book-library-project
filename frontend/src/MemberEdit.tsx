@@ -8,6 +8,7 @@ export default function MemberEdit() {
     const {memberId} = useParams();
     const navigate = useNavigate();
     const formRef = useRef(null);
+
     const [member, setMember] = useState<Member>({
         id: "",
         firstname: "",
@@ -28,7 +29,7 @@ export default function MemberEdit() {
     function putMember() {
         axios.put(`/api/members/${memberId}`, member)
             .then(() => {
-                navigate("/admin/members")
+                navigate("/admin/members", { state: { saved: true }});
             })
             .catch(err => console.error(err));
     }

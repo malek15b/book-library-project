@@ -16,11 +16,10 @@ export default function MemberAdd() {
         createdAt: ""
     });
 
-
     function postMember() {
         axios.post(`/api/members`, member)
             .then(() => {
-                navigate("/admin/members")
+                navigate("/admin/members", { state: { saved: true }});
             })
             .catch(err => console.error(err));
     }

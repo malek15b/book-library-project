@@ -2,13 +2,24 @@ import {useEffect, useState} from "react";
 import {Member} from "./model/Member";
 import axios from "axios";
 import Actions from "./Actions";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import SuccessAlert from "./SuccessAlert";
 
 export default function MemberList() {
 
     const [members, setMembers] = useState<Member[]>([]);
     const [search, setSearch] = useState<string>("");
     const navigate = useNavigate();
+    const [showAlert, setShowAlert] = useState<string>("");
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state?.saved) {
+            setShowAlert("Mitglied erfolgreich gespeichert.");
+            setTimeout(() => setShowAlert(null), 2200)
+            window.history.replaceState({}, document.title);
+        }
+    }, [location.state]);
 
     useEffect(() => {
         axios.get("/api/members")
@@ -25,6 +36,8 @@ export default function MemberList() {
             axios.delete(`/api/members/${memberId}`)
                 .then(() => {
                     setMembers(members.filter((b) => b.id !== memberId))
+                    setShowAlert("Mitglied erfolgreich gelöscht.");
+                    setTimeout(() => setShowAlert(null), 2200)
                 })
                 .catch(err => console.error(err));
         }
@@ -32,6 +45,7 @@ export default function MemberList() {
 
     return (
         <>
+            {showAlert && <SuccessAlert message={showAlert} />}
             <div className="container mx-auto">
                 <h1 className="text-2xl font-bold mb-4 h-10">
                     Mitglieder <span className="text-gray-500">({members.length})</span>
@@ -50,7 +64,7 @@ export default function MemberList() {
                             <th className="px-6 py-3">Vorname</th>
                             <th className="px-6 py-3">Nachname</th>
                             <th className="px-6 py-3">Email</th>
-                            <th className="px-6 py-3">Active</th>
+                            <th className="px-6 py-3">Aktiv</th>
                             <th className="px-6 py-3">Erstellt am</th>
                             <th className="px-6 py-3"></th>
                         </tr>
