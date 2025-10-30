@@ -32,7 +32,7 @@ export default function MemberList() {
     }
 
     function deleteMember(memberId: string) {
-        if(confirm("Löschen?")) {
+        if (confirm("Löschen?")) {
             axios.delete(`/api/members/${memberId}`)
                 .then(() => {
                     setMembers(members.filter((b) => b.id !== memberId))
@@ -45,14 +45,16 @@ export default function MemberList() {
 
     return (
         <>
-            {showAlert && <SuccessAlert message={showAlert} />}
+            {showAlert && <SuccessAlert message={showAlert}/>}
             <div className="container mx-auto">
                 <h1 className="text-2xl font-bold mb-4 h-10">
                     Mitglieder <span className="text-gray-500">({members.length})</span>
                 </h1>
                 <div className="flex justify-between mb-6">
-                    <input onChange={(e) => setSearch(e.target.value)} placeholder="Suche eingeben.." className="w-1/2" value={search} name={"search"} type="text" id="search"/>
-                    <button className="btn-primary" onClick={() => navigate("/admin/members/add")}>Mitglied anlegen</button>
+                    <input onChange={(e) => setSearch(e.target.value)} placeholder="Suche eingeben.." className="w-1/2"
+                           value={search} name={"search"} type="text" id="search"/>
+                    <button className="btn-primary" onClick={() => navigate("/admin/members/add")}>Mitglied anlegen
+                    </button>
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
                 {members.length === 0 ? (
@@ -76,19 +78,21 @@ export default function MemberList() {
                                 m.lastname && m.lastname.toLowerCase().includes(search.toLowerCase()) ||
                                 m.email && m.email.toLowerCase().includes(search.toLowerCase())
                             ).map((m) => (
-                            <tr className="hover:bg-gray-50" key={m.id}>
-                                <td className="px-6 py-3">{m.firstname}</td>
-                                <td className="px-6 py-3">{m.lastname}</td>
-                                <td className="px-6 py-3">{m.email}</td>
-                                <td className="px-6 py-3">{m.active ? "Ja": "Nein"}</td>
-                                <td className="px-6 py-3">{localData(m.createdAt)}</td>
-                                <td className="px-6 py-3 font-medium">
-                                    <Actions
-                                        edit={() => navigate(`/admin/members/edit/${m.id}`)}
-                                        delete={() => deleteMember(m.id)} />
-                                </td>
-                            </tr>
-                        ))
+                                <tr className="hover:bg-gray-50" key={m.id}>
+                                    <td className="px-6 py-3">{m.firstname}</td>
+                                    <td className="px-6 py-3">{m.lastname}</td>
+                                    <td className="px-6 py-3">{m.email}</td>
+                                    <td className="px-6 py-3">{m.active ? "Ja" : "Nein"}</td>
+                                    <td className="px-6 py-3">{localData(m.createdAt)}</td>
+                                    <td className="px-6 py-3 font-medium">
+                                        <div className="flex gap-2 justify-end">
+                                        <Actions
+                                            edit={() => navigate(`/admin/members/edit/${m.id}`)}
+                                            delete={() => deleteMember(m.id)}/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
                         }
                         </tbody>
                     </table>

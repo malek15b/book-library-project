@@ -1,11 +1,14 @@
-import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
-import {Book} from "./model/Book";
-import {useNavigate, useParams} from "react-router-dom";
-import axios from "axios";
-import BookForm from "./BookForm";
+import {ChangeEvent, FormEvent, Ref, useEffect, useRef, useState} from "react";
 import {Genre} from "./model/Genre";
+import {Book} from "./model/Book";
+import axios from "axios";
+import ISBNInput from "./ISBNInput";
+import {BookResponse} from "./model/BookResponse";
+import SearchableSelect from "./SearchableSelect";
+import {Member} from "./model/Member";
+import {useNavigate, useParams} from "react-router-dom";
 
-export default function BookEdit() {
+export default function BookBorrow() {
 
     const {bookId} = useParams();
     const navigate = useNavigate();
@@ -27,6 +30,14 @@ export default function BookEdit() {
             .catch(err => console.error(err));
     }, [bookId]);
 
+    const [members, setMembers] = useState<Member[]>([]);
+
+    useEffect(() => {
+        axios.get("/api/members")
+            .then((res) => setMembers(res.data))
+            .catch((err) => console.error("Error Loading:", err));
+    }, []);
+
     function putBook() {
         axios.put(`/api/books/${bookId}`, book)
             .then(() => {
@@ -37,22 +48,13 @@ export default function BookEdit() {
 
     function handelSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        putBook();
+        putBook()
     }
 
-    function handelInputChange(e: ChangeEvent<HTMLInputElement>) {
-        const {name, value} = e.target;
+    function handelSelectChange(member: Member) {
         setBook({
             ...book,
-            [name]: value
-        })
-    }
-
-    function handelGenreChange(e: ChangeEvent<HTMLSelectElement>, genres: Genre[]) {
-        const {name, value} = e.target;
-        setBook({
-            ...book,
-            [name]: value
+            borrowedBy: member.id
         })
     }
 
@@ -67,12 +69,15 @@ export default function BookEdit() {
                     <button className="btn-primary" onClick={() => formRef.current.requestSubmit()}>Speichern</button>
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
-                <BookForm book={book}
-                          setBookResponse={null}
-                          handelSubmit={handelSubmit}
-                          handelInputChange={handelInputChange}
-                          handelGenreChange={handelGenreChange}
-                          formRef={formRef} />
+                <form ref={formRef} className="max-w-sm mx-auto" onSubmit={handelSubmit}>
+                    <div className="mb-5">
+                        <label className="block mb-2 font-medium text-gray-900">Ausleihen</label>
+                        <SearchableSelect
+                            options={members}
+                            handelSelectChange={handelSelectChange}
+                        />
+                    </div>
+                </form>
             </div>
         </>
     )

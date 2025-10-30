@@ -16,6 +16,7 @@ import {appUser} from "./model/appUser";
 import MemberList from "./MemberList";
 import MemberEdit from "./MemberEdit";
 import MemberAdd from "./MemberAdd";
+import BookBorrow from "./BookBorrow";
 
 function App() {
 
@@ -61,6 +62,7 @@ function App() {
                                     <Route path="books/edit/:bookId" element={<BookEdit />} />
                                     <Route path="books/add" element={<BookAdd />} />
                                     <Route path="books" element={<BookList />} />
+                                    <Route path="books/borrow/:bookId" element={<BookBorrow />} />
 
                                     <Route path="genres/edit/:genreId" element={<GenreEdit />} />
                                     <Route path="genres/add" element={<GenreAdd />} />

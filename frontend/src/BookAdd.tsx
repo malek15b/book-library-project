@@ -15,6 +15,7 @@ export default function BookAdd() {
         name: "",
         author: "",
         genreId: null,
+        borrowedBy: null,
         createdAt: ""
     });
 

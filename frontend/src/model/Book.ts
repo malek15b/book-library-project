@@ -3,5 +3,6 @@ export type Book = {
     name: string;
     author: string;
     genreId: string;
+    borrowedBy: string;
     createdAt: string;
 }
