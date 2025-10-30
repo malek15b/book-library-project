@@ -3,5 +3,6 @@ export type Member = {
     firstname: string;
     lastname: string;
     email: string;
+    active: boolean;
     createdAt: string;
 }

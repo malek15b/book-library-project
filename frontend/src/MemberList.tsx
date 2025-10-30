@@ -1,10 +1,34 @@
 import {useEffect, useState} from "react";
 import {Member} from "./model/Member";
+import axios from "axios";
+import Actions from "./Actions";
+import {useNavigate} from "react-router-dom";
 
 export default function MemberList() {
 
     const [members, setMembers] = useState<Member[]>([]);
     const [search, setSearch] = useState<string>("");
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.get("/api/members")
+            .then((res) => setMembers(res.data))
+            .catch((err) => console.error("Error Loading:", err));
+    }, []);
+
+    function localData(data: string) {
+        return new Date(data).toLocaleString();
+    }
+
+    function deleteMember(memberId: string) {
+        if(confirm("Löschen?")) {
+            axios.delete(`/api/members/${memberId}`)
+                .then(() => {
+                    setMembers(members.filter((b) => b.id !== memberId))
+                })
+                .catch(err => console.error(err));
+        }
+    }
 
     return (
         <>
@@ -25,6 +49,9 @@ export default function MemberList() {
                             <th className="px-6 py-3">Vorname</th>
                             <th className="px-6 py-3">Nachname</th>
                             <th className="px-6 py-3">Email</th>
+                            <th className="px-6 py-3">Active</th>
+                            <th className="px-6 py-3">Erstellt am</th>
+                            <th className="px-6 py-3"></th>
                         </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
@@ -34,6 +61,13 @@ export default function MemberList() {
                                 <td className="px-6 py-3">{m.firstname}</td>
                                 <td className="px-6 py-3">{m.lastname}</td>
                                 <td className="px-6 py-3">{m.email}</td>
+                                <td className="px-6 py-3">{m.active ? "Ja": "Nein"}</td>
+                                <td className="px-6 py-3">{localData(m.createdAt)}</td>
+                                <td className="px-6 py-3 font-medium">
+                                    <Actions
+                                        edit={() => navigate(`/admin/members/edit/${m.id}`)}
+                                        delete={() => deleteMember(m.id)} />
+                                </td>
                             </tr>
                         ))
                         }
