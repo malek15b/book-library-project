@@ -8,12 +8,13 @@ import java.time.LocalDateTime;
 public record BookDto(String name,
                       String author,
                       String genreId,
-                      String borrowedBy) {
+                      String borrowedBy,
+                      LocalDateTime borrowedAt) {
     public Book toBook(String id) {
-        return new Book(id, name, author, genreId, borrowedBy, LocalDateTime.now());
+        return new Book(id, name, author, genreId, borrowedBy, borrowedAt, LocalDateTime.now());
     }
 
     public Book toBook(String id, LocalDateTime createdAt) {
-        return new Book(id, name, author, genreId, borrowedBy, createdAt);
+        return new Book(id, name, author, genreId, borrowedBy, borrowedAt, createdAt);
     }
 }

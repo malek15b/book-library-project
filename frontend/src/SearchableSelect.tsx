@@ -1,20 +1,26 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Member} from "./model/Member";
+import axios from "axios";
 
 type SearchableSelectProps = {
     options: Member[],
     handelSelectChange: (option: Member) => void
+    member: Member
 }
 
 export default function SearchableSelect(props: SearchableSelectProps) {
     const [searchTerm, setSearchTerm] = useState("");
     const [open, setOpen] = useState(false);
-    const [selected, setSelected] = useState(null);
+    const [selected, setSelected] = useState<string>(fullName(props.member));
 
     const filteredOptions = props.options.filter((member) =>
         member.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
         member.lastname.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    useEffect(() => {
+        setSelected(fullName(props.member));
+    }, [props.member]);
 
     const handleSelect = (option: Member) => {
         setSelected(fullName(option));
@@ -24,7 +30,10 @@ export default function SearchableSelect(props: SearchableSelectProps) {
     };
 
     function fullName(member: Member) {
-        return `${member.firstname} ${member.lastname}`;
+        if(member) {
+            return `${member.firstname} ${member.lastname}`;
+        }
+        return ""
     }
 
     return (
@@ -33,7 +42,7 @@ export default function SearchableSelect(props: SearchableSelectProps) {
                 onClick={() => setOpen((prev) => !prev)}
                 type="button"
                 className="w-full bg-white border border-gray-300 px-3 py-2 text-left shadow-sm hover:bg-gray-50 focus:outline-none">
-                {selected || "Bitte wählen..."}
+                {selected || "Mitglied suchen..."}
             </button>
 
             {open && (
@@ -46,7 +55,7 @@ export default function SearchableSelect(props: SearchableSelectProps) {
                         className="w-full border-b border-gray-200 px-3 py-2 focus:outline-none"
                     />
 
-                    <ul className="max-h-40 overflow-y-auto">
+                    <ul className="max-h-50 overflow-y-auto">
                         {filteredOptions.length > 0 ? (
                             filteredOptions.map((option: Member) => (
                                 <li

@@ -62,6 +62,7 @@ export default function BookList() {
                             <th className="w-0.5"></th>
                             <th className="px-6 py-3">Name</th>
                             <th className="px-6 py-3">Autor</th>
+                            <th className="px-6 py-3">Status</th>
                             <th className="px-6 py-3 w-1/8">Genre</th>
                             <th className="px-6 py-3 w-1/8"></th>
                         </tr>
@@ -77,12 +78,26 @@ export default function BookList() {
                                     className="pr-6 py-3"></td>
                                 <td className="px-6 py-3 w-1/3">{b.name}</td>
                                 <td className="px-6 py-3">{b.author}</td>
+                                <td className="px-6 py-3">
+                                    <div className="flex items-center">
+                                        <div className={"h-2.5 w-2.5 rounded-full " + (b.borrowedBy ?"bg-green-400" :"bg-gray-500") + " me-2"}></div>
+                                        {(b.borrowedBy ? "Ausgeliehen" : "Verfügbar")}
+                                    </div>
+                                </td>
                                 <td className="px-6 py-3">{getGenre(b.genreId)?.name}</td>
                                 <td className="px-6 py-3 font-medium">
                                     <div className="flex gap-2 justify-end">
                                         <button title="bearbeiten"
                                                 onClick={() => navigate(`/admin/books/borrow/${b.id}`)} className="inline-flex items-center justify-center p-2
-                                         hover:bg-gray-100 text-gray-600">{ b.borrowedBy ? "zurückgeben" : "Ausleihen" }
+                                         hover:bg-gray-100 text-gray-600">
+
+                                            <svg className={ "w-6 h-6 " + (b.borrowedBy ?"text-green-400" :"text-gray-500")} aria-hidden="true"
+                                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                 fill="currentColor" viewBox="0 0 24 24">
+                                                <path fillRule="evenodd"
+                                                      d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                                                      clipRule="evenodd"/>
+                                            </svg>
                                         </button>
                                         <Actions
                                             edit={() => navigate(`/admin/books/edit/${b.id}`)}

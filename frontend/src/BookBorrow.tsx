@@ -1,9 +1,6 @@
-import {ChangeEvent, FormEvent, Ref, useEffect, useRef, useState} from "react";
-import {Genre} from "./model/Genre";
+import {FormEvent, useEffect, useRef, useState} from "react";
 import {Book} from "./model/Book";
 import axios from "axios";
-import ISBNInput from "./ISBNInput";
-import {BookResponse} from "./model/BookResponse";
 import SearchableSelect from "./SearchableSelect";
 import {Member} from "./model/Member";
 import {useNavigate, useParams} from "react-router-dom";
@@ -19,6 +16,7 @@ export default function BookBorrow() {
         author: "",
         genreId: null,
         borrowedBy: null,
+        borrowedAt: null,
         createdAt: ""
     });
 
@@ -31,12 +29,22 @@ export default function BookBorrow() {
     }, [bookId]);
 
     const [members, setMembers] = useState<Member[]>([]);
+    const [member, setMember] = useState<Member>();
 
     useEffect(() => {
         axios.get("/api/members")
             .then((res) => setMembers(res.data))
             .catch((err) => console.error("Error Loading:", err));
     }, []);
+
+    useEffect(() => {
+        if (members.length > 0 && book?.borrowedBy) {
+            const m = getMember(book.borrowedBy);
+            setMember(m);
+        } else {
+            setMember(undefined);
+        }
+    }, [members, book.borrowedBy]);
 
     function putBook() {
         axios.put(`/api/books/${bookId}`, book)
@@ -54,8 +62,23 @@ export default function BookBorrow() {
     function handelSelectChange(member: Member) {
         setBook({
             ...book,
-            borrowedBy: member.id
+            borrowedBy: member.id,
+            borrowedAt: new Date().toISOString()
         })
+    }
+
+    function removeMember() {
+        setBook({
+            ...book,
+            borrowedBy: null,
+            borrowedAt: null
+        })
+        setMember(null)
+    }
+
+    function getMember(memberId: string) {
+        const [member] = members.filter((m) => m.id === memberId);
+        return member;
     }
 
     return (
@@ -69,15 +92,30 @@ export default function BookBorrow() {
                     <button className="btn-primary" onClick={() => formRef.current.requestSubmit()}>Speichern</button>
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
-                <form ref={formRef} className="max-w-sm mx-auto" onSubmit={handelSubmit}>
-                    <div className="mb-5">
-                        <label className="block mb-2 font-medium text-gray-900">Ausleihen</label>
-                        <SearchableSelect
-                            options={members}
-                            handelSelectChange={handelSelectChange}
-                        />
+                <div className="max-w-sm mx-auto mb-5">
+                    <p className="text-2xl mb-2">{book.name}</p>
+                    <p>{book.author}</p>
+                </div>
+                {book.id &&
+                    <div className="max-w-sm mx-auto">
+                        <form ref={formRef} onSubmit={handelSubmit}>
+                            <div className="mb-5">
+                                <label className="block mb-2 font-medium text-gray-900">Ausleihen an:</label>
+                                {members.length !== 0 &&
+                                    <SearchableSelect
+                                        options={members}
+                                        member={member}
+                                        handelSelectChange={handelSelectChange}
+                                    />
+                                }
+                            </div>
+                        </form>
+                        { book.borrowedBy &&
+                        <button onClick={removeMember} className="btn-danger mr-3">Zurückgeben</button>
+                        }
                     </div>
-                </form>
+                }
+
             </div>
         </>
     )

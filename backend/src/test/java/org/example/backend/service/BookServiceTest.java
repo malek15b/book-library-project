@@ -25,7 +25,7 @@ class BookServiceTest {
     @Test
     public void adBook_ShouldReturnBookWithId() {
         //GIVEN
-        BookDto bookDto = new BookDto("Test", "Test", null,null);
+        BookDto bookDto = new BookDto("Test", "Test", null,null, null);
         String id = UUID.randomUUID().toString();
         when(idService.randomId()).thenReturn(id);
         //WHEN
@@ -58,8 +58,8 @@ class BookServiceTest {
     public void updateBook_ShouldBeSuccessful() {
         //GIVEN
         String id = UUID.randomUUID().toString();
-        Book book = new Book(id, "Test", "Test", null, null,LocalDateTime.now());
-        BookDto bookDto = new BookDto("Test updated", "Test updated", null,null);
+        Book book = new Book(id, "Test", "Test", null, null, null, LocalDateTime.now());
+        BookDto bookDto = new BookDto("Test updated", "Test updated", null,null, null);
         when(bookRepository.findById(id)).thenReturn(Optional.of(book));
         //WHEN
         service.update(id, bookDto);
@@ -72,7 +72,7 @@ class BookServiceTest {
     public void updateBook_ShouldBeFailed_WhenBookIsNotFound() {
         //GIVEN
         String id = UUID.randomUUID().toString();
-        BookDto bookDto = new BookDto("Test updated", "Test updated", null,null);
+        BookDto bookDto = new BookDto("Test updated", "Test updated", null,null, null);
         when(bookRepository.findById(id)).thenReturn(Optional.empty());
         //WHEN
         assertThrows(IdNotFoundException.class, () -> service.update(id, bookDto));

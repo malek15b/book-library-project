@@ -7,5 +7,6 @@ public record Book(String id,
                    String author,
                    String genreId,
                    String borrowedBy,
+                   LocalDateTime borrowedAt,
                    LocalDateTime createdAt) {
 }

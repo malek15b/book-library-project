@@ -12,6 +12,11 @@
     hover:bg-gray-50 border border-gray-100;
 }
 
+.btn-danger {
+    @apply bg-red-500 text-white px-6 py-2 shadow-md font-medium
+    hover:bg-red-400 border border-gray-100;
+}
+
 .btn {
     @apply bg-white text-gray-800 px-6 py-2 font-medium
     hover:bg-gray-50 border border-gray-200;
