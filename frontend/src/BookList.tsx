@@ -59,7 +59,7 @@ export default function BookList() {
                     <table className="min-w-full text-left border-collapse">
                         <thead className="bg-gray-100 text-gray-700">
                         <tr>
-                            <th className="w-0.5"></th>
+                            <th className="w-02"></th>
                             <th className="px-6 py-3">Name</th>
                             <th className="px-6 py-3">Autor</th>
                             <th className="px-6 py-3">Status</th>
@@ -74,8 +74,7 @@ export default function BookList() {
                             getGenre(b.genreId)?.name && getGenre(b.genreId)?.name.toLowerCase().includes(search.toLowerCase())
                         ).map((b) => (
                             <tr className="hover:bg-gray-50" key={b.id}>
-                                <td style={{background: getGenre(b.genreId)?.color ?? "#FFF"}}
-                                    className="pr-6 py-3"></td>
+                                <td style={{background: getGenre(b.genreId)?.color ?? "#FFF"}}></td>
                                 <td className="px-6 py-3 w-1/3">{b.name}</td>
                                 <td className="px-6 py-3">{b.author}</td>
                                 <td className="px-6 py-3">
@@ -100,6 +99,7 @@ export default function BookList() {
                                             </svg>
                                         </button>
                                         <Actions
+                                            details={null}
                                             edit={() => navigate(`/admin/books/edit/${b.id}`)}
                                             delete={() => deleteBook(b.id)}/>
                                     </div>

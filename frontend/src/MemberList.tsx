@@ -66,8 +66,8 @@ export default function MemberList() {
                             <th className="px-6 py-3">Vorname</th>
                             <th className="px-6 py-3">Nachname</th>
                             <th className="px-6 py-3">Email</th>
-                            <th className="px-6 py-3">Aktiv</th>
-                            <th className="px-6 py-3">Erstellt am</th>
+                            <th className="px-6 py-3">Status</th>
+                            <th className="px-6 py-3">Mitglied seit</th>
                             <th className="px-6 py-3"></th>
                         </tr>
                         </thead>
@@ -82,11 +82,17 @@ export default function MemberList() {
                                     <td className="px-6 py-3">{m.firstname}</td>
                                     <td className="px-6 py-3">{m.lastname}</td>
                                     <td className="px-6 py-3">{m.email}</td>
-                                    <td className="px-6 py-3">{m.active ? "Ja" : "Nein"}</td>
+                                    <td className="px-6 py-3">
+                                        <div className="flex items-center">
+                                            <div className={"h-2.5 w-2.5 rounded-full " + (m.active ?"bg-green-400" :"bg-gray-500") + " me-2"}></div>
+                                            {(m ? "Aktiv" : "Inaktiv")}
+                                        </div>
+                                    </td>
                                     <td className="px-6 py-3">{localData(m.createdAt)}</td>
                                     <td className="px-6 py-3 font-medium">
                                         <div className="flex gap-2 justify-end">
                                         <Actions
+                                            details={() => navigate(`/admin/members/details/${m.id}`)}
                                             edit={() => navigate(`/admin/members/edit/${m.id}`)}
                                             delete={() => deleteMember(m.id)}/>
                                         </div>

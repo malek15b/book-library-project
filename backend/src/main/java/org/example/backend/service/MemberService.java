@@ -2,8 +2,10 @@ package org.example.backend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.backend.exception.IdNotFoundException;
+import org.example.backend.model.Book;
 import org.example.backend.model.Member;
 import org.example.backend.model.MemberDto;
+import org.example.backend.repository.BookRepository;
 import org.example.backend.repository.MemberRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final BookRepository bookRepository;
     private final IdService idService;
 
     public List<Member> getAll() {
@@ -42,5 +45,12 @@ public class MemberService {
             throw new IdNotFoundException(id, "Member");
         }
         memberRepository.deleteById(id);
+    }
+
+    public List<Book> getBooksByMemberId(String id) {
+        if (!memberRepository.existsById(id)) {
+            throw new IdNotFoundException(id, "Member");
+        }
+        return bookRepository.findByBorrowedByIs(id);
     }
 }

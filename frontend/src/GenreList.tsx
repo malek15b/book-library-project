@@ -69,6 +69,7 @@ export default function GenreList() {
                                 <td className="px-6 py-3 font-medium">
                                     <div className="flex gap-2 justify-end">
                                     <Actions
+                                        details={null}
                                         edit={() => navigate(`/admin/genres/edit/${g.id}`)}
                                         delete={() => deleteGenre(g.id)} />
                                     </div>

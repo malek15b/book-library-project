@@ -1,6 +1,7 @@
 package org.example.backend.controller;
 
 import lombok.AllArgsConstructor;
+import org.example.backend.model.Book;
 import org.example.backend.model.Member;
 import org.example.backend.model.MemberDto;
 import org.example.backend.service.MemberService;
@@ -39,5 +40,10 @@ public class MemberController {
     @GetMapping("/{id}")
     public Member get(@PathVariable String id) {
         return memberService.getById(id);
+    }
+
+    @GetMapping("/books/{id}")
+    public List<Book> getBooks(@PathVariable String id) {
+        return memberService.getBooksByMemberId(id);
     }
 }

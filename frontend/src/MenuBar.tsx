@@ -52,13 +52,17 @@ export default function MenuBar(props: LogoutProps) {
                     </ul>
 
                     <div className="mt-auto">
-                        <div className="text-blue-600 p-2 ms-3 pb-0 whitespace-nowrap">
-                            {props.user.username}
-                        </div>
                         <button
                             onClick={props.logout}
                             className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group w-full">
-                            <span className="ms-3 whitespace-nowrap">Logout</span>
+                            <svg className="w-6 h-6 text-gray-800 dark:text-white mr-2" aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                 viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2"/>
+                            </svg>
+                            <span>{props.user.username}</span>
                         </button>
                     </div>
                 </div>

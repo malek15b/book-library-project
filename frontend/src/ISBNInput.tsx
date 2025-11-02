@@ -38,12 +38,12 @@ export default function ISBNInput(props: IsbnProps) {
 
     return (
         <>
-            <div className="max-w-sm mx-auto">
+            <div className="max-w-lg mx-auto">
                 <div className="mb-5 relative">
                     <label htmlFor="isbn" className="block mb-2 font-medium text-gray-900 dark:text-white">
                         ISBN</label>
                     <div className="flex justify-between">
-                        <input placeholder="ISBN Open Library" onChange={(e) => {
+                        <input placeholder="0123456789" onChange={(e) => {
                             setIsbn(e.target.value)
                             setMessage(null)
                         }} name={"isbn"}

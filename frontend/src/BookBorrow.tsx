@@ -92,12 +92,12 @@ export default function BookBorrow() {
                     <button className="btn-primary" onClick={() => formRef.current.requestSubmit()}>Speichern</button>
                 </div>
                 <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
-                <div className="max-w-sm mx-auto mb-5">
+                <div className="max-w-lg mx-auto mb-5">
                     <p className="text-2xl mb-2">{book.name}</p>
                     <p>{book.author}</p>
                 </div>
                 {book.id &&
-                    <div className="max-w-sm mx-auto">
+                    <div className="max-w-lg mx-auto">
                         <form ref={formRef} onSubmit={handelSubmit}>
                             <div className="mb-5">
                                 <label className="block mb-2 font-medium text-gray-900">Ausleihen an:</label>
