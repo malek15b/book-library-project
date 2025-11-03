@@ -27,6 +27,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/books/*").authenticated()
                         .requestMatchers("/api/genres").authenticated()
                         .requestMatchers("/api/genres/*").authenticated()
+                        .requestMatchers("/api/members").authenticated()
+                        .requestMatchers("/api/members/*").authenticated()
                         .anyRequest().permitAll()
                 )
                 .exceptionHandling(exceptionHandlingConfigurer ->

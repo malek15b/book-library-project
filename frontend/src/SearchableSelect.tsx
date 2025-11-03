@@ -1,0 +1,77 @@
+import {useEffect, useState} from "react";
+import {Member} from "./model/Member";
+import axios from "axios";
+
+type SearchableSelectProps = {
+    options: Member[],
+    handelSelectChange: (option: Member) => void
+    member: Member
+}
+
+export default function SearchableSelect(props: SearchableSelectProps) {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [open, setOpen] = useState(false);
+    const [selected, setSelected] = useState<string>(fullName(props.member));
+
+    const filteredOptions = props.options.filter((member) =>
+        member.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        member.lastname.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    useEffect(() => {
+        setSelected(fullName(props.member));
+    }, [props.member]);
+
+    const handleSelect = (option: Member) => {
+        setSelected(fullName(option));
+        props.handelSelectChange(option);
+        setOpen(false);
+        setSearchTerm("");
+    };
+
+    function fullName(member: Member) {
+        if(member) {
+            return `${member.firstname} ${member.lastname}`;
+        }
+        return ""
+    }
+
+    return (
+        <div className="relative">
+            <button
+                onClick={() => setOpen((prev) => !prev)}
+                type="button"
+                className="w-full bg-white border border-gray-300 px-3 py-2 text-left shadow-sm hover:bg-gray-50 focus:outline-none">
+                {selected || "Mitglied suchen..."}
+            </button>
+
+            {open && (
+                <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 shadow-lg">
+                    <input
+                        type="text"
+                        placeholder="Suchen..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full border-b border-gray-200 px-3 py-2 focus:outline-none"
+                    />
+
+                    <ul className="max-h-50 overflow-y-auto">
+                        {filteredOptions.length > 0 ? (
+                            filteredOptions.map((option: Member) => (
+                                <li
+                                    key={option.id}
+                                    onClick={() => handleSelect(option)}
+                                    className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
+                                >
+                                    { fullName(option) }
+                                </li>
+                            ))
+                        ) : (
+                            <li className="px-3 py-2 text-gray-500">Keine Ergebnisse</li>
+                        )}
+                    </ul>
+                </div>
+            )}
+        </div>
+    );
+}

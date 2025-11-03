@@ -13,6 +13,11 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import ProtectedRoutes from "./ProtectedRoutes";
 import {appUser} from "./model/appUser";
+import MemberList from "./MemberList";
+import MemberEdit from "./MemberEdit";
+import MemberAdd from "./MemberAdd";
+import BookBorrow from "./BookBorrow";
+import MemberDetails from "./MemberDetails";
 
 function App() {
 
@@ -58,10 +63,16 @@ function App() {
                                     <Route path="books/edit/:bookId" element={<BookEdit />} />
                                     <Route path="books/add" element={<BookAdd />} />
                                     <Route path="books" element={<BookList />} />
+                                    <Route path="books/borrow/:bookId" element={<BookBorrow />} />
 
                                     <Route path="genres/edit/:genreId" element={<GenreEdit />} />
                                     <Route path="genres/add" element={<GenreAdd />} />
                                     <Route path="genres" element={<GenreList />} />
+
+                                    <Route path="members" element={<MemberList />} />
+                                    <Route path="members/edit/:memberId" element={<MemberEdit />} />
+                                    <Route path="members/add" element={<MemberAdd />} />
+                                    <Route path="members/details/:memberId" element={<MemberDetails />} />
                                 </Routes>
                             </div>
                         </>

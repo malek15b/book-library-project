@@ -5,6 +5,7 @@ import org.example.backend.exception.IdNotFoundException;
 import org.example.backend.model.Genre;
 import org.example.backend.model.GenreDto;
 import org.example.backend.repository.GenreRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class GenreService {
     private final IdService idService;
 
     public List<Genre> getAll() {
-        return genreRepository.findAll();
+        return genreRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public Genre add(GenreDto genreDto) {

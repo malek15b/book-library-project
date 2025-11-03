@@ -124,7 +124,7 @@ class BookControllerTest {
     @WithMockUser
     void getBookWithUser() throws Exception {
         String id = "1";
-        Book book = new Book(id, "Test", "Test", "1", LocalDateTime.now());
+        Book book = new Book(id, "Test", "Test", "1", null, null, LocalDateTime.now());
         bookRepository.save(book);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books/" + id)
@@ -138,7 +138,7 @@ class BookControllerTest {
     @Test
     void getBookWithoutUser() throws Exception {
         String id = "1";
-        Book book = new Book(id, "Test", "Test", "1", LocalDateTime.now());
+        Book book = new Book(id, "Test", "Test", "1", null, null, LocalDateTime.now());
         bookRepository.save(book);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books/" + id))

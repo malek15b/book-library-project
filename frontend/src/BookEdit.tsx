@@ -15,6 +15,8 @@ export default function BookEdit() {
         name: "",
         author: "",
         genreId: null,
+        borrowedBy: null,
+        borrowedAt: null,
         createdAt: ""
     });
 

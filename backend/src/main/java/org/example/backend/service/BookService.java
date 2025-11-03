@@ -8,6 +8,7 @@ import org.example.backend.openLibrary.BookResponse;
 import org.example.backend.openLibrary.OpenLibraryResponse;
 import org.example.backend.openLibrary.OpenLibraryService;
 import org.example.backend.repository.BookRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class BookService {
     private final OpenLibraryService openLibraryService;
 
     public List<Book> getAll() {
-        return bookRepository.findAll();
+        return bookRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public Book add(BookDto bookDto) {
@@ -48,7 +49,7 @@ public class BookService {
     }
 
     public BookResponse search(String isbn) {
-        return openLibraryService.findByISBN(isbn);
+        return openLibraryService.findByISBN(isbn.trim());
     }
 
 }

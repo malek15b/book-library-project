@@ -31,7 +31,7 @@ export default function BookForm(props: BookProps) {
             { props.setBookResponse &&
                 <ISBNInput setBook={props.setBookResponse} setSubjects={setSubjects}/>
             }
-            <form ref={props.formRef} className="max-w-sm mx-auto" onSubmit={props.handelSubmit}>
+            <form ref={props.formRef} className="max-w-lg mx-auto" onSubmit={props.handelSubmit}>
                 <div className="mb-5">
                     <label htmlFor="name" className="block mb-2 font-medium text-gray-900 dark:text-white">
                         Name</label>

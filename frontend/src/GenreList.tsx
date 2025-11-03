@@ -67,9 +67,12 @@ export default function GenreList() {
                                     <div className="w-6 h-6 rounded-full" style={{background: g.color}}></div>
                                 </td>
                                 <td className="px-6 py-3 font-medium">
+                                    <div className="flex gap-2 justify-end">
                                     <Actions
+                                        details={null}
                                         edit={() => navigate(`/admin/genres/edit/${g.id}`)}
                                         delete={() => deleteGenre(g.id)} />
+                                    </div>
                                 </td>
                             </tr>
                         ))
