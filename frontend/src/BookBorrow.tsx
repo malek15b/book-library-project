@@ -3,7 +3,7 @@ import {Book} from "./model/Book";
 import axios from "axios";
 import SearchableSelect from "./SearchableSelect";
 import {Member} from "./model/Member";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 
 export default function BookBorrow() {
 
@@ -32,7 +32,7 @@ export default function BookBorrow() {
     const [member, setMember] = useState<Member>();
 
     useEffect(() => {
-        axios.get("/api/members")
+        axios.get("/api/members?active=1")
             .then((res) => setMembers(res.data))
             .catch((err) => console.error("Error Loading:", err));
     }, []);
@@ -68,12 +68,14 @@ export default function BookBorrow() {
     }
 
     function removeMember() {
-        setBook({
-            ...book,
-            borrowedBy: null,
-            borrowedAt: null
-        })
-        setMember(null)
+        if(confirm("Zurückgeben?")) {
+            setBook({
+                ...book,
+                borrowedBy: null,
+                borrowedAt: null
+            })
+            setMember(null)
+        }
     }
 
     function getMember(memberId: string) {
@@ -100,7 +102,9 @@ export default function BookBorrow() {
                     <div className="max-w-lg mx-auto">
                         <form ref={formRef} onSubmit={handelSubmit}>
                             <div className="mb-5">
-                                <label className="block mb-2 font-medium text-gray-900">Ausleihen an:</label>
+                                <label className="block mb-2 font-medium text-gray-900">
+                                    { book.borrowedBy ? "Ausgeliehen an": "Ausleihen an" }
+                                </label>
                                 {members.length !== 0 &&
                                     <SearchableSelect
                                         options={members}
@@ -110,9 +114,11 @@ export default function BookBorrow() {
                                 }
                             </div>
                         </form>
+                        <div className="flex justify-end">
                         { book.borrowedBy &&
-                        <button onClick={removeMember} className="btn-danger mr-3">Zurückgeben</button>
+                            <button onClick={removeMember} className="btn-danger">Zurückgeben</button>
                         }
+                        </div>
                     </div>
                 }
 

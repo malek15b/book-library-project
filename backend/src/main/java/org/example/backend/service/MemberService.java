@@ -23,6 +23,10 @@ public class MemberService {
         return memberRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
+    public List<Member> getAllActive(boolean active) {
+        return memberRepository.findAllByActive(active, Sort.by(Sort.Direction.DESC, "createdAt"));
+    }
+
     public Member add(MemberDto memberDto) {
         Member member = memberDto.toMember(idService.randomId());
         memberRepository.save(member);

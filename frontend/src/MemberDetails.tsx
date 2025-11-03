@@ -3,11 +3,13 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {Member} from "./model/Member";
 import {Book} from "./model/Book";
+import {Genre} from "./model/Genre";
 
 export default function MemberDetails() {
     const {memberId} = useParams();
     const navigate = useNavigate();
     const [books, setBooks] = useState<Book[]>([])
+    const [genres, setGenres] = useState<Genre[]>([])
 
     const [member, setMember] = useState<Member>();
 
@@ -26,6 +28,19 @@ export default function MemberDetails() {
             })
             .catch(err => console.error(err));
     }, [memberId]);
+
+
+    useEffect(() => {
+        axios.get("/api/genres")
+            .then((res) => setGenres(res.data))
+            .catch((err) => console.error("Error Loading:", err));
+    }, []);
+
+    function getGenre(genreId: string) {
+        const [genre] = genres.filter((g) => g.id === genreId);
+        return genre;
+    }
+
 
     function localData(data: string) {
         return new Date(data).toLocaleString();
@@ -60,17 +75,21 @@ export default function MemberDetails() {
                             <table className="min-w-full text-left border-collapse">
                                 <thead className="bg-gray-100 text-gray-700">
                                 <tr>
+                                    <th className="w-02"></th>
                                     <th className="px-6 py-3 w-1/3">Name</th>
                                     <th className="px-6 py-3">Author</th>
-                                    <th className="px-6 py-3">Ausgeliehen am</th>
+                                    <th className="px-6 py-3">Genre</th>
+                                    <th className="px-6 py-3 right">Ausgeliehen am</th>
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
                                 {
                                     books.map((b) => (
                                         <tr className="hover:bg-gray-50" key={b.id}>
+                                            <td style={{background: getGenre(b.genreId)?.color ?? "#FFF"}}></td>
                                             <td className="px-6 py-3">{b.name}</td>
                                             <td className="px-6 py-3">{b.author}</td>
+                                            <td className="px-6 py-3">{getGenre(b.genreId)?.name}</td>
                                             <td className="px-6 py-3">{localData(b.borrowedAt)}</td>
                                         </tr>
                                     ))

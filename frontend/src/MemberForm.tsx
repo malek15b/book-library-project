@@ -1,6 +1,4 @@
 import {ChangeEvent, FormEvent, Ref} from "react";
-import {Genre} from "./model/Genre";
-import IsbnInput from "./ISBNInput";
 import {Member} from "./model/Member";
 
 type MemberProps = {
@@ -37,12 +35,12 @@ export default function MemberForm(props: MemberProps) {
                     <input value={member.email} onChange={props.handelInputChange} name={"email"} type="text" id="email"
                            required/>
                 </div>
-                <div className="flex items-center mb-4">
-                    <input checked={member.active} onChange={props.handelInputChange} name={"active"} type="checkbox"
-                           id="active"
-                           className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 focus:ring-2"/>
-                    <label htmlFor="default-checkbox"
-                           className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Aktiv</label>
+                <div className="flex items-center ps-4 border border-gray-200 rounded-sm dark:border-gray-700">
+                    <input checked={member.active} onChange={props.handelInputChange} id="bordered-checkbox-1" type="checkbox"
+                           name={"active"}
+                           className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm"/>
+                    <label htmlFor="bordered-checkbox-1"
+                           className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Aktiv</label>
                 </div>
             </form>
         </>

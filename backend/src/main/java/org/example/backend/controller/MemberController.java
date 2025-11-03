@@ -17,7 +17,10 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping
-    public List<Member> getAll() {
+    public List<Member> getAll(@RequestParam(required = false) Boolean active) {
+        if (active != null) {
+            return memberService.getAllActive(active);
+        }
         return memberService.getAll();
     }
 
