@@ -1,8 +1,12 @@
+import {Link} from "react-router-dom";
+import {useState} from "react";
+
 type LoginProps = {
     login: () => void
 }
 export default function LoginPage(props: LoginProps) {
 
+    const [username, setUsername] = useState("");
     return (
         <>
             <div className="flex flex-col justify-center px-6 lg:px-8 pt-20">
@@ -29,16 +33,17 @@ export default function LoginPage(props: LoginProps) {
                             className="text-sm absolute px-3 font-medium text-gray-600 -translate-x-1/2 bg-white left-1/2">ODER</span>
                     </div>
 
-                    <form className="max-w-sm mx-auto">
+                    <div className="max-w-sm mx-auto">
                         <div className="mb-5 text-gray-700">
                             <label htmlFor="username" className="block mb-2 font-medium text-gray-600">
                                 E-Mail-Adresse</label>
-                            <input name={"username"} type="text" id="username" required/>
+                            <input onChange={(e) =>
+                                setUsername(e.target.value)} name={"username"} type="text" id="username" required/>
                         </div>
                         <div className="mb-5">
-                            <button className="flex w-full justify-center btn-primary">Weiter</button>
+                            <Link to={"/password"} state={{ username }} className="flex w-full justify-center btn-primary">Weiter</Link>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </>

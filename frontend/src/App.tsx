@@ -10,7 +10,7 @@ import GenreEdit from "./GenreEdit.js";
 import GenreAdd from "./GenreAdd.js";
 
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {FormEvent, useEffect, useState} from "react";
 import ProtectedRoutes from "./ProtectedRoutes";
 import {appUser} from "./model/appUser";
 import MemberList from "./MemberList";
@@ -18,10 +18,18 @@ import MemberEdit from "./MemberEdit";
 import MemberAdd from "./MemberAdd";
 import BookBorrow from "./BookBorrow";
 import MemberDetails from "./MemberDetails";
+import RegisterPage from "./RegisterPage";
+import PasswordPage from "./PasswordPage";
 
 function App() {
 
     const [user, setUser] = useState<appUser>(undefined)
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
 
     function login() {
         const host: string = window.location.host === "localhost:5173" ?
@@ -50,6 +58,8 @@ function App() {
     return (
         <Routes>
             <Route path="/login" element={<LoginPage login={login} />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/password" element={<PasswordPage />} />
             <Route path="/" element={<LoginPage login={login} />} />
 
             <Route element={<ProtectedRoutes user={user} />}>
