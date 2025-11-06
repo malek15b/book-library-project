@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {Book} from "./model/Book";
-import {Link, useNavigate} from "react-router-dom";
-import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import api from "./axiosConfig";
 import {Genre} from "./model/Genre";
 import Actions from "./Actions";
 
@@ -13,7 +13,7 @@ export default function BookList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get("/api/books")
+        api.get("/books")
             .then((res) => {
                 setBooks(res.data)
             })
@@ -21,14 +21,14 @@ export default function BookList() {
     }, []);
 
     useEffect(() => {
-        axios.get("/api/genres")
+        api.get("/genres")
             .then((res) => setGenres(res.data))
             .catch((err) => console.error("Error Loading:", err));
     }, []);
 
     function deleteBook(bookId: string) {
         if (confirm("Löschen?")) {
-            axios.delete(`/api/books/${bookId}`)
+            api.delete(`/books/${bookId}`)
                 .then(() => {
                     setBooks(books.filter((b) => b.id !== bookId))
                 })
@@ -79,14 +79,14 @@ export default function BookList() {
                                 <td className="px-6 py-3">{b.author}</td>
                                 <td className="px-6 py-3">
                                     <div className="flex items-center">
-                                        <div className={"h-2.5 w-2.5 rounded-full " + (b.borrowedBy ?"bg-green-400" :"bg-gray-500") + " me-2"}></div>
+                                        <div className={"h-2.5 w-2.5 rounded-full " + (!b.borrowedBy ?"bg-green-400" :"bg-gray-500") + " me-2"}></div>
                                         {(b.borrowedBy ? "Ausgeliehen" : "Verfügbar")}
                                     </div>
                                 </td>
                                 <td className="px-6 py-3">{getGenre(b.genreId)?.name}</td>
                                 <td className="px-6 py-3 font-medium">
                                     <div className="flex gap-2 justify-end">
-                                        <button title="bearbeiten"
+                                        <button title="ausleihen/zurückgeben"
                                                 onClick={() => navigate(`/admin/books/borrow/${b.id}`)} className="inline-flex items-center justify-center p-2
                                          hover:bg-gray-100 text-gray-600">
 

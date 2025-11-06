@@ -6,7 +6,7 @@ export default function LoginPage(props: LoginProps) {
     return (
         <>
             <div className="flex flex-col justify-center px-6 lg:px-8 pt-20">
-                <div className="sm:mx-auto sm:w-full sm:max-w-sm p-5 bg-white shadow-2xl">
+                <div className="sm:mx-auto sm:w-full sm:max-w-sm p-5 bg-white shadow-2xl border border-gray-100">
 
                     <h1 className="text-2xl mb-5 h-10 text-center">Anmelden oder registrieren</h1>
                     <div className="flex items-center justify-center w-full mb-2">

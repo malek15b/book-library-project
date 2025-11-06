@@ -1,9 +1,9 @@
 import {FormEvent, useEffect, useRef, useState} from "react";
 import {Book} from "./model/Book";
-import axios from "axios";
+import api from "./axiosConfig";
 import SearchableSelect from "./SearchableSelect";
 import {Member} from "./model/Member";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export default function BookBorrow() {
 
@@ -21,7 +21,7 @@ export default function BookBorrow() {
     });
 
     useEffect(() => {
-        axios.get(`/api/books/${bookId}`)
+        api.get(`/books/${bookId}`)
             .then(res => {
                 setBook(res.data)
             })
@@ -32,7 +32,7 @@ export default function BookBorrow() {
     const [member, setMember] = useState<Member>();
 
     useEffect(() => {
-        axios.get("/api/members?active=1")
+        api.get("/members?active=1")
             .then((res) => setMembers(res.data))
             .catch((err) => console.error("Error Loading:", err));
     }, []);
@@ -47,7 +47,7 @@ export default function BookBorrow() {
     }, [members, book.borrowedBy]);
 
     function putBook() {
-        axios.put(`/api/books/${bookId}`, book)
+        api.put(`/books/${bookId}`, book)
             .then(() => {
                 navigate("/admin/books")
             })

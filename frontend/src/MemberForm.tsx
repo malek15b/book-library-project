@@ -14,7 +14,7 @@ export default function MemberForm(props: MemberProps) {
 
     return (
         <>
-            <form ref={props.formRef} className="max-w-sm mx-auto" onSubmit={props.handelSubmit}>
+            <form ref={props.formRef} className="max-w-lg mx-auto" onSubmit={props.handelSubmit}>
                 <div className="mb-5">
                     <label htmlFor="firstname" className="block mb-2 font-medium text-gray-900 dark:text-white">
                         Vorname</label>

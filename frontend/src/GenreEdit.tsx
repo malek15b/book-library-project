@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
-import axios from "axios";
+import api from "./axiosConfig";
 import {Genre} from "./model/Genre";
 import GenreForm from "./GenreForm";
 
@@ -16,7 +16,7 @@ export default function GenreEdit() {
     });
 
     useEffect(() => {
-        axios.get(`/api/genres/${genreId}`)
+        api.get(`/genres/${genreId}`)
             .then(res => {
                 setGenre(res.data)
             })
@@ -24,7 +24,7 @@ export default function GenreEdit() {
     }, [genreId]);
 
     function putGenre() {
-        axios.put(`/api/genres/${genreId}`, genre)
+        api.put(`/genres/${genreId}`, genre)
             .then(() => {
                 navigate("/admin/genres")
             })

@@ -1,9 +1,9 @@
 import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
 import {Book} from "./model/Book";
 import {useNavigate, useParams} from "react-router-dom";
-import axios from "axios";
 import BookForm from "./BookForm";
 import {Genre} from "./model/Genre";
+import api from "./axiosConfig";
 
 export default function BookEdit() {
 
@@ -21,7 +21,7 @@ export default function BookEdit() {
     });
 
     useEffect(() => {
-        axios.get(`/api/books/${bookId}`)
+        api.get(`/books/${bookId}`)
             .then(res => {
                 setBook(res.data)
             })
@@ -29,7 +29,7 @@ export default function BookEdit() {
     }, [bookId]);
 
     function putBook() {
-        axios.put(`/api/books/${bookId}`, book)
+        api.put(`/books/${bookId}`, book)
             .then(() => {
                 navigate("/admin/books")
             })

@@ -1,9 +1,8 @@
 import {useEffect, useState} from "react";
 import {Member} from "./model/Member";
-import axios from "axios";
+import api from "./axiosConfig";
 import Actions from "./Actions";
 import {useLocation, useNavigate} from "react-router-dom";
-import SuccessAlert from "./SuccessAlert";
 
 export default function MemberList() {
 
@@ -22,7 +21,7 @@ export default function MemberList() {
     }, [location.state]);
 
     useEffect(() => {
-        axios.get("/api/members")
+        api.get("/members")
             .then((res) => setMembers(res.data))
             .catch((err) => console.error("Error Loading:", err));
     }, []);
@@ -33,7 +32,7 @@ export default function MemberList() {
 
     function deleteMember(memberId: string) {
         if (confirm("Löschen?")) {
-            axios.delete(`/api/members/${memberId}`)
+            api.delete(`/members/${memberId}`)
                 .then(() => {
                     setMembers(members.filter((b) => b.id !== memberId))
                     setShowAlert("Mitglied erfolgreich gelöscht.");
@@ -45,7 +44,6 @@ export default function MemberList() {
 
     return (
         <>
-            {showAlert && <SuccessAlert message={showAlert}/>}
             <div className="container mx-auto">
                 <h1 className="text-2xl font-bold mb-4 h-10">
                     Mitglieder <span className="text-gray-500">({members.length})</span>

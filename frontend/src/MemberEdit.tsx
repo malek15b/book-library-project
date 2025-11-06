@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
-import axios from "axios";
+import {FormEvent, useEffect, useRef, useState} from "react";
+import api from "./axiosConfig";
 import {Member} from "./model/Member";
 import MemberForm from "./MemberForm";
 
@@ -19,7 +19,7 @@ export default function MemberEdit() {
     });
 
     useEffect(() => {
-        axios.get(`/api/members/${memberId}`)
+        api.get(`/members/${memberId}`)
             .then(res => {
                 setMember(res.data)
             })
@@ -27,7 +27,7 @@ export default function MemberEdit() {
     }, [memberId]);
 
     function putMember() {
-        axios.put(`/api/members/${memberId}`, member)
+        api.put(`/members/${memberId}`, member)
             .then(() => {
                 navigate("/admin/members", { state: { saved: true }});
             })
