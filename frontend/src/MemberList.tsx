@@ -2,23 +2,13 @@ import {useEffect, useState} from "react";
 import {Member} from "./model/Member";
 import api from "./config/AxiosConfig";
 import Actions from "./Actions";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function MemberList() {
 
     const [members, setMembers] = useState<Member[]>([]);
     const [search, setSearch] = useState<string>("");
     const navigate = useNavigate();
-    const [showAlert, setShowAlert] = useState<string>("");
-    const location = useLocation();
-
-    useEffect(() => {
-        if (location.state?.saved) {
-            setShowAlert("Mitglied erfolgreich gespeichert.");
-            setTimeout(() => setShowAlert(null), 2200)
-            window.history.replaceState({}, document.title);
-        }
-    }, [location.state]);
 
     useEffect(() => {
         api.get("/members")
@@ -35,8 +25,6 @@ export default function MemberList() {
             api.delete(`/members/${memberId}`)
                 .then(() => {
                     setMembers(members.filter((b) => b.id !== memberId))
-                    setShowAlert("Mitglied erfolgreich gelöscht.");
-                    setTimeout(() => setShowAlert(null), 2200)
                 })
                 .catch(err => console.error(err));
         }
@@ -82,17 +70,18 @@ export default function MemberList() {
                                     <td className="px-6 py-3">{m.email}</td>
                                     <td className="px-6 py-3">
                                         <div className="flex items-center">
-                                            <div className={"h-2.5 w-2.5 rounded-full " + (m.active ?"bg-green-400" :"bg-gray-500") + " me-2"}></div>
+                                            <div
+                                                className={"h-2.5 w-2.5 rounded-full " + (m.active ? "bg-green-400" : "bg-gray-500") + " me-2"}></div>
                                             {(m.active ? "Aktiv" : "Inaktiv")}
                                         </div>
                                     </td>
                                     <td className="px-6 py-3">{localData(m.createdAt)}</td>
                                     <td className="px-6 py-3 font-medium">
                                         <div className="flex gap-2 justify-end">
-                                        <Actions
-                                            details={() => navigate(`/admin/members/details/${m.id}`)}
-                                            edit={() => navigate(`/admin/members/edit/${m.id}`)}
-                                            delete={() => deleteMember(m.id)}/>
+                                            <Actions
+                                                details={() => navigate(`/admin/members/details/${m.id}`)}
+                                                edit={() => navigate(`/admin/members/edit/${m.id}`)}
+                                                delete={() => deleteMember(m.id)}/>
                                         </div>
                                     </td>
                                 </tr>
