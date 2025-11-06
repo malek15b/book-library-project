@@ -32,7 +32,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .id(idService.randomId())
                 .userId(oauthUser.getName())
                 .username(oauthUser.getAttribute("login"))
-                .role(Role.ADMIN)
+                .role(Role.USER)
                 .build();
 
         return appUserRepository.save(newUser);
