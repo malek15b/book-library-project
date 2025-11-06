@@ -3,6 +3,7 @@ package org.example.backend.controller;
 import org.example.backend.model.Book;
 import org.example.backend.openLibrary.OpenLibraryService;
 import org.example.backend.repository.BookRepository;
+import org.example.backend.security.Role;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureMockRestServiceServer;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
@@ -89,7 +91,11 @@ class BookControllerTest {
                                 """,
                         MediaType.APPLICATION_JSON));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/books/search?isbn=" + isbn))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/books/search?isbn=" + isbn)
+                        .with(oidcLogin()
+                                .userInfoToken(token -> token.claim("login", "testUser"))
+                                .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
+                        ))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(
                         """
@@ -107,11 +113,24 @@ class BookControllerTest {
     @WithMockUser
     void getAllWithUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books")
-                        .with(oidcLogin().userInfoToken(token -> token
-                                .claim("login", "testUser")
-                        ))
+                        .with(oidcLogin()
+                                .userInfoToken(token -> token.claim("login", "testUser"))
+                                .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
+                        )
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @WithMockUser
+    void getAllWithUser_Role_USER() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/books")
+                        .with(oidcLogin()
+                                .userInfoToken(token -> token.claim("login", "testUser"))
+                                .authorities(new SimpleGrantedAuthority(Role.USER.name()))
+                        )
+                )
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
     @Test
@@ -128,9 +147,10 @@ class BookControllerTest {
         bookRepository.save(book);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books/" + id)
-                        .with(oidcLogin().userInfoToken(token -> token
-                                .claim("login", "testUser")
-                        ))
+                        .with(oidcLogin()
+                                .userInfoToken(token -> token.claim("login", "testUser"))
+                                .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
+                        )
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }

@@ -2,10 +2,12 @@ package org.example.backend.controller;
 
 import org.example.backend.model.Member;
 import org.example.backend.repository.MemberRepository;
+import org.example.backend.security.Role;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -40,10 +42,10 @@ class MemberControllerTest {
         memberRepository.save(member1);
         memberRepository.save(member2);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/members")
-                        .with(oidcLogin().userInfoToken(token -> token
-                                .claim("login", "testUser")
-                        ))
-                )
+                .with(oidcLogin()
+                        .userInfoToken(token -> token.claim("login", "testUser"))
+                        .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
+                ))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2));
 
@@ -56,10 +58,10 @@ class MemberControllerTest {
                 "1", "Test", "Test", "test@example.com", false, LocalDateTime.now());
         memberRepository.save(member);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/members?active=true")
-                        .with(oidcLogin().userInfoToken(token -> token
-                                .claim("login", "testUser")
-                        ))
-                )
+                .with(oidcLogin()
+                        .userInfoToken(token -> token.claim("login", "testUser"))
+                        .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
+                ))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(0));
     }
@@ -77,10 +79,10 @@ class MemberControllerTest {
         memberRepository.save(member2);
         memberRepository.save(member3);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/members?active=false")
-                        .with(oidcLogin().userInfoToken(token -> token
-                                .claim("login", "testUser")
-                        ))
-                )
+                .with(oidcLogin()
+                        .userInfoToken(token -> token.claim("login", "testUser"))
+                        .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
+                ))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2));
 
