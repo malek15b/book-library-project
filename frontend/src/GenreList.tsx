@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import api from "./axiosConfig";
+import api from "./config/AxiosConfig";
 import {Genre} from "./model/Genre";
 import Actions from "./Actions";
 

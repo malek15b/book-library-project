@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
-import api from "./axiosConfig";
+import api from "./config/AxiosConfig";
 import {Genre} from "./model/Genre";
 import GenreForm from "./GenreForm";
 

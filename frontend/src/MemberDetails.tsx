@@ -50,24 +50,26 @@ export default function MemberDetails() {
         <>
             {member &&
                 <div className="container mx-auto">
-                    <h1 className="text-2xl font-bold mb-4 h-10">
-                        {member.firstname} {member.lastname}
-                    </h1>
+                    <div className="flex mb-4">
+                        <h1 className="text-2xl font-bold h-10">
+                            {member.firstname} {member.lastname}
+                        </h1>
+                        <div className="flex items-center ml-5">
+                            <div className={"h-2.5 w-2.5 rounded-full " + (member.active ?"bg-green-400" :"bg-gray-500") + " me-2"}></div>
+                            {(member.active ? "Aktiv" : "Inaktiv")}
+                        </div>
+                    </div>
                     <div className="flex justify-end mb-6">
                         <button onClick={() => navigate("/admin/members")} className="btn-default mr-3">Abbrechen
                         </button>
                     </div>
                     <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
 
-                    <div className="max-w-lg mx-auto">
+                    <div className="max-w-lg mx-auto mb-10">
                         <label className="font-bold mb-5">Name</label>
                         <div className="mb-5">{member.firstname} {member.lastname}</div>
                         <label className="font-bold mb-5">Email</label>
-                        <div className="mb-5">{member.email}</div>
-                        <div className="flex items-center mb-5">
-                            <div className={"h-2.5 w-2.5 rounded-full " + (member.active ?"bg-green-400" :"bg-gray-500") + " me-2"}></div>
-                            {(member ? "Aktiv" : "Inaktiv")}
-                        </div>
+                        <div>{member.email}</div>
                     </div>
 
                     <div className="mx-auto">

@@ -3,7 +3,7 @@ import {Book} from "./model/Book";
 import {useNavigate, useParams} from "react-router-dom";
 import BookForm from "./BookForm";
 import {Genre} from "./model/Genre";
-import api from "./axiosConfig";
+import api from "./config/AxiosConfig";
 
 export default function BookEdit() {
 

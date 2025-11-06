@@ -1,7 +1,7 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
 import {Genre} from "./model/Genre";
-import api from "./axiosConfig";
+import api from "./config/AxiosConfig";
 import GenreForm from "./GenreForm";
 
 export default function GenreAdd() {

@@ -1,6 +1,6 @@
 import {FormEvent, useEffect, useRef, useState} from "react";
 import {Book} from "./model/Book";
-import api from "./axiosConfig";
+import api from "./config/AxiosConfig";
 import SearchableSelect from "./SearchableSelect";
 import {Member} from "./model/Member";
 import {useNavigate, useParams} from "react-router-dom";
@@ -62,8 +62,7 @@ export default function BookBorrow() {
     function handelSelectChange(member: Member) {
         setBook({
             ...book,
-            borrowedBy: member.id,
-            borrowedAt: new Date().toISOString()
+            borrowedBy: member.id
         })
     }
 

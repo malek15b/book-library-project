@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Member} from "./model/Member";
-import api from "./axiosConfig";
+import api from "./config/AxiosConfig";
 import Actions from "./Actions";
 import {useLocation, useNavigate} from "react-router-dom";
 
@@ -83,7 +83,7 @@ export default function MemberList() {
                                     <td className="px-6 py-3">
                                         <div className="flex items-center">
                                             <div className={"h-2.5 w-2.5 rounded-full " + (m.active ?"bg-green-400" :"bg-gray-500") + " me-2"}></div>
-                                            {(m ? "Aktiv" : "Inaktiv")}
+                                            {(m.active ? "Aktiv" : "Inaktiv")}
                                         </div>
                                     </td>
                                     <td className="px-6 py-3">{localData(m.createdAt)}</td>

@@ -15,6 +15,9 @@ public record BookDto(String name,
     }
 
     public Book toBook(String id, LocalDateTime createdAt) {
+        if (borrowedBy != null && borrowedAt == null) {
+            return new Book(id, name, author, genreId, borrowedBy, LocalDateTime.now(), createdAt);
+        }
         return new Book(id, name, author, genreId, borrowedBy, borrowedAt, createdAt);
     }
 }

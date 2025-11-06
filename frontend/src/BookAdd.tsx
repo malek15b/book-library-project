@@ -1,7 +1,7 @@
 import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
 import {Book} from "./model/Book";
 import {useNavigate} from "react-router-dom";
-import api from "./axiosConfig";
+import api from "./config/AxiosConfig";
 import {Genre} from "./model/Genre";
 import BookForm from "./BookForm";
 import {BookResponse} from "./model/BookResponse";

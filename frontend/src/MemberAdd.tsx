@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {FormEvent, useRef, useState} from "react";
-import api from "./axiosConfig";
+import api from "./config/AxiosConfig";
 import {Member} from "./model/Member";
 import MemberForm from "./MemberForm";
 

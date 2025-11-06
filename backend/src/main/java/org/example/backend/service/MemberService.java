@@ -55,6 +55,6 @@ public class MemberService {
         if (!memberRepository.existsById(id)) {
             throw new IdNotFoundException(id, "Member");
         }
-        return bookRepository.findByBorrowedByIs(id);
+        return bookRepository.findByBorrowedByIs(id, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 }

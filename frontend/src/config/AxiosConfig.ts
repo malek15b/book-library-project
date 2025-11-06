@@ -1,5 +1,5 @@
 import axios from "axios";
-import {showGlobalAlert} from "./showGlobalAlert";
+import {showGlobalAlert} from "../showGlobalAlert";
 
 const api = axios.create({
     baseURL: "/api",
