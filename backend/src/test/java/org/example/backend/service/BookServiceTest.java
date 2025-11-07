@@ -7,7 +7,7 @@ import org.example.backend.openLibrary.OpenLibraryService;
 import org.example.backend.repository.BookRepository;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -58,7 +58,7 @@ class BookServiceTest {
     public void updateBook_ShouldBeSuccessful() {
         //GIVEN
         String id = UUID.randomUUID().toString();
-        Book book = new Book(id, "Test", "Test", null, null, null, LocalDateTime.now());
+        Book book = new Book(id, "Test", "Test", null, null, null, Instant.now());
         BookDto bookDto = new BookDto("Test updated", "Test updated", null,null, null);
         when(bookRepository.findById(id)).thenReturn(Optional.of(book));
         //WHEN

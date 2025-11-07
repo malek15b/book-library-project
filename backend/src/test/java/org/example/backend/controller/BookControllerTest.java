@@ -18,9 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
@@ -143,7 +142,7 @@ class BookControllerTest {
     @WithMockUser
     void getBookWithUser() throws Exception {
         String id = "1";
-        Book book = new Book(id, "Test", "Test", "1", null, null, LocalDateTime.now());
+        Book book = new Book(id, "Test", "Test", "1", null, null, Instant.now());
         bookRepository.save(book);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books/" + id)
@@ -158,7 +157,7 @@ class BookControllerTest {
     @Test
     void getBookWithoutUser() throws Exception {
         String id = "1";
-        Book book = new Book(id, "Test", "Test", "1", null, null, LocalDateTime.now());
+        Book book = new Book(id, "Test", "Test", "1", null, null, Instant.now());
         bookRepository.save(book);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books/" + id))
