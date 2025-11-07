@@ -2,7 +2,7 @@ import {ChangeEvent, FormEvent, Ref} from "react";
 import {Member} from "./model/Member";
 
 type MemberProps = {
-    member: Member,
+    member: Partial<Member>,
     handelSubmit: (event: FormEvent<HTMLFormElement>) => void,
     handelInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
     formRef: Ref<HTMLFormElement>

@@ -7,13 +7,11 @@ import MemberForm from "./MemberForm";
 export default function MemberAdd() {
     const navigate = useNavigate();
     const formRef = useRef(null);
-    const [member, setMember] = useState<Member>({
-        id: "",
+    const [member, setMember] = useState<Partial<Member>>({
         firstname: "",
         lastname: "",
         email: "",
         active: true,
-        createdAt: ""
     });
 
     function postMember() {

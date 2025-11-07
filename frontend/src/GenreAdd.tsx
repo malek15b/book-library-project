@@ -7,11 +7,9 @@ import GenreForm from "./GenreForm";
 export default function GenreAdd() {
     const navigate = useNavigate();
     const formRef = useRef(null);
-    const [genre, setGenre] = useState<Genre>({
-        id: "",
+    const [genre, setGenre] = useState<Partial<Genre>>({
         name: "",
         color: null,
-        createdAt: ""
     });
 
     function postGenre() {

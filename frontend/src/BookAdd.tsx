@@ -10,14 +10,10 @@ export default function BookAdd() {
 
     const navigate = useNavigate();
     const formRef = useRef(null);
-    const [book, setBook] = useState<Book>({
-        id: "",
+    const [book, setBook] = useState<Partial<Book>>({
         name: "",
         author: "",
         genreId: null,
-        borrowedBy: null,
-        borrowedAt: null,
-        createdAt: ""
     });
 
     function postBook() {

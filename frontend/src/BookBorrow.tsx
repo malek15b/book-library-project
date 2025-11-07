@@ -10,15 +10,9 @@ export default function BookBorrow() {
     const {bookId} = useParams();
     const navigate = useNavigate();
     const formRef = useRef(null);
-    const [book, setBook] = useState<Book>({
-        id: "",
-        name: "",
-        author: "",
-        genreId: null,
-        borrowedBy: null,
-        borrowedAt: null,
-        createdAt: ""
-    });
+    const [book, setBook] = useState<Book>();
+
+    const [members, setMembers] = useState<Member[]>([]);
 
     useEffect(() => {
         api.get(`/books/${bookId}`)
@@ -28,23 +22,11 @@ export default function BookBorrow() {
             .catch(err => console.error(err));
     }, [bookId]);
 
-    const [members, setMembers] = useState<Member[]>([]);
-    const [member, setMember] = useState<Member>();
-
     useEffect(() => {
         api.get("/members?active=1")
             .then((res) => setMembers(res.data))
             .catch((err) => console.error("Error Loading:", err));
-    }, []);
-
-    useEffect(() => {
-        if (members.length > 0 && book?.borrowedBy) {
-            const m = getMember(book.borrowedBy);
-            setMember(m);
-        } else {
-            setMember(undefined);
-        }
-    }, [members, book.borrowedBy]);
+    }, [book]);
 
     function putBook() {
         api.put(`/books/${bookId}`, book)
@@ -67,61 +49,55 @@ export default function BookBorrow() {
     }
 
     function removeMember() {
-        if(confirm("Zurückgeben?")) {
+        if (confirm("Zurückgeben?")) {
             setBook({
                 ...book,
                 borrowedBy: null,
                 borrowedAt: null
             })
-            setMember(null)
         }
-    }
-
-    function getMember(memberId: string) {
-        const [member] = members.filter((m) => m.id === memberId);
-        return member;
     }
 
     return (
         <>
-            <div className="container mx-auto">
-                <h1 className="text-2xl font-bold mb-4 h-10">
-                    {book.name}
-                </h1>
-                <div className="flex justify-end mb-6">
-                    <button onClick={() => navigate("/admin/books")} className="btn-default mr-3">Abbrechen</button>
-                    <button className="btn-primary" onClick={() => formRef.current.requestSubmit()}>Speichern</button>
-                </div>
-                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
-                <div className="max-w-lg mx-auto mb-5">
-                    <p className="text-2xl mb-2">{book.name}</p>
-                    <p>{book.author}</p>
-                </div>
-                {book.id &&
+            {book &&
+                <div className="container mx-auto">
+                    <h1 className="text-2xl font-bold mb-4 h-10">
+                        {book.name}
+                    </h1>
+                    <div className="flex justify-end mb-6">
+                        <button onClick={() => navigate("/admin/books")} className="btn-default mr-3">Abbrechen</button>
+                        <button className="btn-primary" onClick={() => formRef.current.requestSubmit()}>Speichern
+                        </button>
+                    </div>
+                    <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+                    <div className="max-w-lg mx-auto mb-5">
+                        <p className="text-2xl mb-2">{book.name}</p>
+                        <p>{book.author}</p>
+                    </div>
                     <div className="max-w-lg mx-auto">
                         <form ref={formRef} onSubmit={handelSubmit}>
                             <div className="mb-5">
                                 <label className="block mb-2 font-medium text-gray-900">
-                                    { book.borrowedBy ? "Ausgeliehen an": "Ausleihen an" }
+                                    {book.borrowedBy ? "Ausgeliehen an" : "Ausleihen an"}
                                 </label>
                                 {members.length !== 0 &&
                                     <SearchableSelect
-                                        options={members}
-                                        member={member}
+                                        members={members}
+                                        memberId={book.borrowedBy}
                                         handelSelectChange={handelSelectChange}
                                     />
                                 }
                             </div>
                         </form>
                         <div className="flex justify-end">
-                        { book.borrowedBy &&
-                            <button onClick={removeMember} className="btn-danger">Zurückgeben</button>
-                        }
+                            {book.borrowedBy &&
+                                <button onClick={removeMember} className="btn-danger">Zurückgeben</button>
+                            }
                         </div>
                     </div>
-                }
-
-            </div>
+                </div>
+            }
         </>
     )
 }

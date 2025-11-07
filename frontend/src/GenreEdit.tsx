@@ -8,12 +8,7 @@ export default function GenreEdit() {
     const {genreId} = useParams();
     const navigate = useNavigate();
     const formRef = useRef(null);
-    const [genre, setGenre] = useState<Genre>({
-        id: "",
-        name: "",
-        color: null,
-        createdAt: ""
-    });
+    const [genre, setGenre] = useState<Genre>();
 
     useEffect(() => {
         api.get(`/genres/${genreId}`)
@@ -53,21 +48,25 @@ export default function GenreEdit() {
 
     return (
         <>
-            <div className="container mx-auto">
-                <h1 className="text-2xl font-bold mb-4 h-10">
-                    {genre.name}
-                </h1>
-                <div className="flex justify-end mb-6">
-                    <button onClick={() => navigate("/admin/genres")} className="btn-default mr-3">Abbrechen</button>
-                    <button className="btn-primary" onClick={() => formRef.current.requestSubmit()}>Speichern</button>
+            {genre &&
+                <div className="container mx-auto">
+                    <h1 className="text-2xl font-bold mb-4 h-10">
+                        {genre.name}
+                    </h1>
+                    <div className="flex justify-end mb-6">
+                        <button onClick={() => navigate("/admin/genres")} className="btn-default mr-3">Abbrechen
+                        </button>
+                        <button className="btn-primary" onClick={() => formRef.current.requestSubmit()}>Speichern
+                        </button>
+                    </div>
+                    <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
+                    <GenreForm genre={genre}
+                               handelSubmit={handelSubmit}
+                               handelInputChange={handelInputChange}
+                               handelColorChange={handelColorChange}
+                               formRef={formRef}/>
                 </div>
-                <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
-                <GenreForm genre={genre}
-                           handelSubmit={handelSubmit}
-                           handelInputChange={handelInputChange}
-                           handelColorChange={handelColorChange}
-                           formRef={formRef}/>
-            </div>
+            }
         </>
     )
 }
