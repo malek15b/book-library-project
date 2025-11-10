@@ -12,10 +12,6 @@ export default function GenreList() {
     useEffect(() => {
         api.get("/genres")
             .then((res) => {
-                const sorted = res.data.sort(
-                    (a:Genre, b:Genre) =>
-                        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-                );
                 setGenres(res.data)
             })
             .catch((err) => console.error("Error Loading:", err));

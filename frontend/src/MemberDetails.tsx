@@ -65,15 +65,10 @@ export default function MemberDetails() {
                     </div>
                     <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"/>
 
-                    <div className="max-w-lg mx-auto mb-10">
-                        <label className="font-bold mb-5">Name</label>
-                        <div className="mb-5">{member.firstname} {member.lastname}</div>
-                        <label className="font-bold mb-5">Email</label>
-                        <div>{member.email}</div>
-                    </div>
-
                     <div className="mx-auto">
-                        {books.length !== 0 && (
+                        {books.length === 0 ? (
+                            <p>Derzeit sind keine Bücher ausgeliehen.</p>
+                        ) : (
                             <table className="min-w-full text-left border-collapse">
                                 <thead className="bg-gray-100 text-gray-700">
                                 <tr>
@@ -81,7 +76,7 @@ export default function MemberDetails() {
                                     <th className="px-6 py-3 w-1/3">Name</th>
                                     <th className="px-6 py-3">Author</th>
                                     <th className="px-6 py-3">Genre</th>
-                                    <th className="px-6 py-3 right">Ausgeliehen am</th>
+                                    <th className="px-6 py-3 text-right">Ausgeliehen am</th>
                                 </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
@@ -92,7 +87,7 @@ export default function MemberDetails() {
                                             <td className="px-6 py-3">{b.name}</td>
                                             <td className="px-6 py-3">{b.author}</td>
                                             <td className="px-6 py-3">{getGenre(b.genreId)?.name}</td>
-                                            <td className="px-6 py-3">{localData(b.borrowedAt)}</td>
+                                            <td className="px-6 py-3 text-right">{localData(b.borrowedAt)}</td>
                                         </tr>
                                     ))
                                 }

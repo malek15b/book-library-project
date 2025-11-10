@@ -32,7 +32,7 @@ export default function MemberForm(props: MemberProps) {
                 <div className="mb-5">
                     <label htmlFor="email" className="block mb-2 font-medium text-gray-900 dark:text-white">
                         E-Mail</label>
-                    <input value={member.email} onChange={props.handelInputChange} name={"email"} type="text" id="email"
+                    <input value={member.email} onChange={props.handelInputChange} name={"email"} type="email" id="email"
                            required/>
                 </div>
                 <div className="flex items-center ps-4 border border-gray-200 rounded-sm dark:border-gray-700">
