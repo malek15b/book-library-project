@@ -17,6 +17,7 @@ import MemberEdit from "./MemberEdit";
 import MemberAdd from "./MemberAdd";
 import BookBorrow from "./BookBorrow";
 import MemberDetails from "./MemberDetails";
+import SettingList from "./SettingList";
 
 function App() {
 
@@ -72,6 +73,8 @@ function App() {
                                     <Route path="members/edit/:memberId" element={<MemberEdit />} />
                                     <Route path="members/add" element={<MemberAdd />} />
                                     <Route path="members/details/:memberId" element={<MemberDetails />} />
+
+                                    <Route path="settings" element={<SettingList />} />
                                 </Routes>
                             </div>
                         </>

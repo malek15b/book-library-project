@@ -49,6 +49,13 @@ export default function MenuBar(props: LogoutProps) {
                                 <span className="ms-3 whitespace-nowrap">Mitglieder</span>
                             </Link>
                         </li>
+                        <li>
+                            <Link
+                                to={"/admin/settings"}
+                                className={`${isActive("/admin/setting") ? "active " : ""} flex items-center p-2 text-gray-900 rounded-lg hover:bg-blue-50 group`}>
+                                <span className="ms-3 whitespace-nowrap">Einstellungen</span>
+                            </Link>
+                        </li>
                     </ul>
 
                     <div className="mt-auto">
