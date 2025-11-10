@@ -26,9 +26,7 @@ export default function Actions(props: ActionsProps) {
                           d="M15.232 5.232l3.536 3.536M4 20h4.586a1 1 0 0 0 .707-.293L19.414 9.586a2 2 0 0 0 0-2.828l-2.172-2.172a2 2 0 0 0-2.828 0L4.293 14.293A1 1 0 0 0 4 15V20z"/>
                 </svg>
             </button>
-
-            <button title="löschen" onClick={props.delete} className="inline-flex items-center justify-center p-2 rounded-lg hover:bg-red-50
-                text-red-600">
+            <button title="löschen" onClick={() => props.delete && props.delete()} className={(!props.delete ? "disabled " : "") + "inline-flex items-center justify-center p-2 rounded-lg hover:bg-red-50 text-red-600"}>
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"

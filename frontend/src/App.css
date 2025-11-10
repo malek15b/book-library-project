@@ -52,6 +52,12 @@ input {
     focus:ring-blue-500 focus:border-blue-600 block w-full p-2 px-2.5
 }
 
+.disabled {
+    opacity: 0.5;
+    color: gray;
+    pointer-events: none;
+}
+
 a.active {
     @apply bg-blue-100;
     pointer-events: none;

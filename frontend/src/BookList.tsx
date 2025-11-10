@@ -101,7 +101,7 @@ export default function BookList() {
                                         <Actions
                                             details={null}
                                             edit={() => navigate(`/admin/books/edit/${b.id}`)}
-                                            delete={() => deleteBook(b.id)}/>
+                                            delete={!b.borrowedBy && (() => deleteBook(b.id))}/>
                                     </div>
                                 </td>
                             </tr>
