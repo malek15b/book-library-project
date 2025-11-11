@@ -1,23 +1,21 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
-import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import {FormEvent, useRef, useState} from "react";
+import api from "./config/AxiosConfig";
 import {Member} from "./model/Member";
 import MemberForm from "./MemberForm";
 
 export default function MemberAdd() {
     const navigate = useNavigate();
     const formRef = useRef(null);
-    const [member, setMember] = useState<Member>({
-        id: "",
+    const [member, setMember] = useState<Partial<Member>>({
         firstname: "",
         lastname: "",
         email: "",
         active: true,
-        createdAt: ""
     });
 
     function postMember() {
-        axios.post(`/api/members`, member)
+        api.post(`/members`, member)
             .then(() => {
                 navigate("/admin/members", { state: { saved: true }});
             })

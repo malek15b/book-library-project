@@ -3,24 +3,30 @@ import {Member} from "./model/Member";
 import axios from "axios";
 
 type SearchableSelectProps = {
-    options: Member[],
+    members: Member[],
     handelSelectChange: (option: Member) => void
-    member: Member
+    memberId: string
 }
 
 export default function SearchableSelect(props: SearchableSelectProps) {
     const [searchTerm, setSearchTerm] = useState("");
     const [open, setOpen] = useState(false);
-    const [selected, setSelected] = useState<string>(fullName(props.member));
+    const [selected, setSelected] = useState<string>("");
 
-    const filteredOptions = props.options.filter((member) =>
+    const filteredOptions = props.members.filter((member) =>
         member.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
         member.lastname.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    function getMember(memberId: string) {
+        const [member] = props.members.filter((m) => m.id === memberId);
+        return member;
+    }
+
     useEffect(() => {
-        setSelected(fullName(props.member));
-    }, [props.member]);
+        const member = getMember(props.memberId)
+        setSelected(fullName(member))
+    }, [props.memberId]);
 
     const handleSelect = (option: Member) => {
         setSelected(fullName(option));

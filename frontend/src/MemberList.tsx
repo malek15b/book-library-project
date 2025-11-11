@@ -1,28 +1,17 @@
 import {useEffect, useState} from "react";
 import {Member} from "./model/Member";
-import axios from "axios";
+import api from "./config/AxiosConfig";
 import Actions from "./Actions";
-import {useLocation, useNavigate} from "react-router-dom";
-import SuccessAlert from "./SuccessAlert";
+import {useNavigate} from "react-router-dom";
 
 export default function MemberList() {
 
     const [members, setMembers] = useState<Member[]>([]);
     const [search, setSearch] = useState<string>("");
     const navigate = useNavigate();
-    const [showAlert, setShowAlert] = useState<string>("");
-    const location = useLocation();
 
     useEffect(() => {
-        if (location.state?.saved) {
-            setShowAlert("Mitglied erfolgreich gespeichert.");
-            setTimeout(() => setShowAlert(null), 2200)
-            window.history.replaceState({}, document.title);
-        }
-    }, [location.state]);
-
-    useEffect(() => {
-        axios.get("/api/members")
+        api.get("/members")
             .then((res) => setMembers(res.data))
             .catch((err) => console.error("Error Loading:", err));
     }, []);
@@ -33,11 +22,9 @@ export default function MemberList() {
 
     function deleteMember(memberId: string) {
         if (confirm("Löschen?")) {
-            axios.delete(`/api/members/${memberId}`)
+            api.delete(`/members/${memberId}`)
                 .then(() => {
                     setMembers(members.filter((b) => b.id !== memberId))
-                    setShowAlert("Mitglied erfolgreich gelöscht.");
-                    setTimeout(() => setShowAlert(null), 2200)
                 })
                 .catch(err => console.error(err));
         }
@@ -45,7 +32,6 @@ export default function MemberList() {
 
     return (
         <>
-            {showAlert && <SuccessAlert message={showAlert}/>}
             <div className="container mx-auto">
                 <h1 className="text-2xl font-bold mb-4 h-10">
                     Mitglieder <span className="text-gray-500">({members.length})</span>
@@ -84,17 +70,18 @@ export default function MemberList() {
                                     <td className="px-6 py-3">{m.email}</td>
                                     <td className="px-6 py-3">
                                         <div className="flex items-center">
-                                            <div className={"h-2.5 w-2.5 rounded-full " + (m.active ?"bg-green-400" :"bg-gray-500") + " me-2"}></div>
-                                            {(m ? "Aktiv" : "Inaktiv")}
+                                            <div
+                                                className={"h-2.5 w-2.5 rounded-full " + (m.active ? "bg-green-400" : "bg-gray-500") + " me-2"}></div>
+                                            {(m.active ? "Aktiv" : "Inaktiv")}
                                         </div>
                                     </td>
                                     <td className="px-6 py-3">{localData(m.createdAt)}</td>
                                     <td className="px-6 py-3 font-medium">
                                         <div className="flex gap-2 justify-end">
-                                        <Actions
-                                            details={() => navigate(`/admin/members/details/${m.id}`)}
-                                            edit={() => navigate(`/admin/members/edit/${m.id}`)}
-                                            delete={() => deleteMember(m.id)}/>
+                                            <Actions
+                                                details={() => navigate(`/admin/members/details/${m.id}`)}
+                                                edit={() => navigate(`/admin/members/edit/${m.id}`)}
+                                                delete={() => deleteMember(m.id)}/>
                                         </div>
                                     </td>
                                 </tr>

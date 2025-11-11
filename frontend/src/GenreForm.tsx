@@ -3,7 +3,7 @@ import {Genre} from "./model/Genre";
 import IsbnInput from "./ISBNInput";
 
 type GenreProps = {
-    genre: Genre,
+    genre: Partial<Genre>,
     handelSubmit: (event: FormEvent<HTMLFormElement>) => void,
     handelInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
     handelColorChange: (color: string) => void,

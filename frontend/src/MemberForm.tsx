@@ -2,7 +2,7 @@ import {ChangeEvent, FormEvent, Ref} from "react";
 import {Member} from "./model/Member";
 
 type MemberProps = {
-    member: Member,
+    member: Partial<Member>,
     handelSubmit: (event: FormEvent<HTMLFormElement>) => void,
     handelInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
     formRef: Ref<HTMLFormElement>
@@ -14,7 +14,7 @@ export default function MemberForm(props: MemberProps) {
 
     return (
         <>
-            <form ref={props.formRef} className="max-w-sm mx-auto" onSubmit={props.handelSubmit}>
+            <form ref={props.formRef} className="max-w-lg mx-auto" onSubmit={props.handelSubmit}>
                 <div className="mb-5">
                     <label htmlFor="firstname" className="block mb-2 font-medium text-gray-900 dark:text-white">
                         Vorname</label>
@@ -32,7 +32,7 @@ export default function MemberForm(props: MemberProps) {
                 <div className="mb-5">
                     <label htmlFor="email" className="block mb-2 font-medium text-gray-900 dark:text-white">
                         E-Mail</label>
-                    <input value={member.email} onChange={props.handelInputChange} name={"email"} type="text" id="email"
+                    <input value={member.email} onChange={props.handelInputChange} name={"email"} type="email" id="email"
                            required/>
                 </div>
                 <div className="flex items-center ps-4 border border-gray-200 rounded-sm dark:border-gray-700">
