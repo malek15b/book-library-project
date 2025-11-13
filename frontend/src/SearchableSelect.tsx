@@ -64,12 +64,14 @@ export default function SearchableSelect(props: SearchableSelectProps) {
                     <ul className="max-h-50 overflow-y-auto">
                         {filteredOptions.length > 0 ? (
                             filteredOptions.map((option: Member) => (
-                                <li
-                                    key={option.id}
-                                    onClick={() => handleSelect(option)}
-                                    className="px-3 py-2 hover:bg-blue-100 cursor-pointer"
-                                >
-                                    { fullName(option) }
+                                <li key={option.id}>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleSelect(option)}
+                                        className="text-left w-full px-3 py-2 hover:bg-blue-100 cursor-pointer"
+                                    >
+                                        { fullName(option) }
+                                    </button>
                                 </li>
                             ))
                         ) : (

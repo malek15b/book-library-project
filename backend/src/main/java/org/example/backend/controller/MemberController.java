@@ -5,6 +5,7 @@ import org.example.backend.model.Book;
 import org.example.backend.model.Member;
 import org.example.backend.model.MemberDto;
 import org.example.backend.service.MemberService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,9 +36,9 @@ public class MemberController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable String id) {
+    public ResponseEntity<String> delete(@PathVariable String id) {
         memberService.deleteById(id);
-        return "Member with id " + id + " was deleted";
+        return ResponseEntity.ok("Member was deleted successfully.");
     }
 
     @GetMapping("/{id}")
