@@ -4,14 +4,14 @@
 Books can be added automatically via ISBN lookup or manually managed.  
 Future improvements include user roles, Multiple language support, import/export functionality, and customizable fields to make the app even more flexible and powerful.
 
+This is a capstone project that is part of the Java Development Bootcamp at neuefische GmbH.
+
 ---
 
 ## Features
 
-- **Book Management** – Add, edit, and delete books
+- **Book, Genre and Member Management** – Add, edit, and delete books
 - **ISBN Lookup** – Automatically fill in book data using an external API
-- **Genre Management** – Add, edit, and delete genres
-- **Member Management** – Add, edit, and delete members
 - **Borrowing System** – Track book loans and returns
 
 ---
@@ -51,3 +51,7 @@ docker run -d -p 8080:8080 \
   -e HOST_FRONTEND=/ \
   -e MONGO_DB_URI=<your-mongo-db-uri> \
   <your-image>:latest
+```
+
+## Access the application
+Open your browser and visit: http://localhost:8080
