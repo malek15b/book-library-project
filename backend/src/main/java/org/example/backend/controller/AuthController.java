@@ -1,5 +1,7 @@
 package org.example.backend.controller;
 
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
 import org.example.backend.jwt.JwtService;
 import org.example.backend.security.AppUser;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
 
@@ -53,6 +56,15 @@ public class AuthController {
         return appUserRepository.findByUserId(username).orElse(null);
     }
 
+    @PostMapping("/exists")
+    public ResponseEntity<?> exists(@RequestBody AppUserDto appUserDto) {
+        String username = appUserDto.username();
+        AppUser user = appUserRepository.findByUserId(username).orElse(null);
+        return ResponseEntity.ok(Map.of(
+                "redirect", user == null ? "register" : "password"
+        ));
+    }
+
     @PostMapping("/register")
     public AppUserDto register(@RequestBody AppUser user) {
         Optional<AppUser> optional = appUserRepository.findByUsername(user.username());
@@ -64,7 +76,7 @@ public class AuthController {
                 .userId(user.username())
                 .username(user.username())
                 .password(passwordEncoder.encode(user.password()))
-                .role(Role.USER)
+                .role(Role.ADMIN)
                 .build();
         appUserRepository.save(newUser);
         return new AppUserDto(user.id(), user.username(), user.role());
@@ -72,6 +84,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AppUser loginRequest) {
+
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password())

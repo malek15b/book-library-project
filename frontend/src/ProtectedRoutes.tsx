@@ -8,10 +8,12 @@ type ProtectedRoutesProps = {
 export default function ProtectedRoutes(props: Readonly<ProtectedRoutesProps>) {
 
     if (props.user === undefined) {
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
 
-    return (
-        props.user ? <Outlet/> : <Navigate to={"/"}/>
-    )
+    if (!props.user) {
+        return <Navigate to="/login" replace />;
+    }
+
+    return <Outlet />;
 }

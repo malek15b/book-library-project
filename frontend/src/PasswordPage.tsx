@@ -1,5 +1,6 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import {ChangeEvent, FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import api from "./config/AxiosConfig";
 import axios from "axios";
 
 export default function PasswordPage() {
@@ -22,7 +23,8 @@ export default function PasswordPage() {
             .then((res) => {
                 if(res.data) {
                     localStorage.setItem("token", res.data.token);
-                    navigate("/admin/books")
+                    //navigate("/admin/books") // @todo user is Null
+                    window.location.href = "/admin/books"
                 }
             })
             .catch(err => console.error(err));

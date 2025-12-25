@@ -49,7 +49,7 @@ export default function RegisterPage() {
                         <div className="mb-5 text-gray-700">
                             <label htmlFor="password" className="block mb-2 font-medium text-gray-600">
                                 Password</label>
-                            <input value={formData.password} onChange={handelInputChange} name={"password"} type="text" id="password" required/>
+                            <input value={formData.password} onChange={handelInputChange} name={"password"} type="password" id="password" required/>
                         </div>
                         <div className="mb-5">
                             <button type={"submit"} className="flex w-full justify-center btn-primary">Weiter</button>

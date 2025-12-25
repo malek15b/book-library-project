@@ -1,5 +1,6 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
+import axios from "axios";
 
 type LoginProps = {
     login: () => void
@@ -7,6 +8,22 @@ type LoginProps = {
 export default function LoginPage(props: LoginProps) {
 
     const [username, setUsername] = useState("");
+    const navigate = useNavigate();
+
+    function exists() {
+        axios.post("/api/auth/exists", {
+            username: username
+        })
+            .then((res) => {
+                navigate("/" + res.data.redirect, {
+                    state: {
+                        username: username
+                    },
+                });
+            })
+            .catch(err => console.error(err));
+    }
+
     return (
         <>
             <div className="flex flex-col justify-center px-6 lg:px-8 pt-20">
@@ -41,7 +58,7 @@ export default function LoginPage(props: LoginProps) {
                                 setUsername(e.target.value)} name={"username"} type="text" id="username" required/>
                         </div>
                         <div className="mb-5">
-                            <Link to={"/password"} state={{ username }} className="flex w-full justify-center btn-primary">Weiter</Link>
+                            <button onClick={() => exists()} className="flex w-full justify-center btn-primary">Weiter</button>
                         </div>
                     </div>
                 </div>
