@@ -1,4 +1,3 @@
-import './App.css'
 import {Route, Routes} from "react-router-dom";
 import BookList from "./BookList.js";
 import MenuBar from "./MenuBar.js";
@@ -20,6 +19,7 @@ import BookBorrow from "./BookBorrow";
 import MemberDetails from "./MemberDetails";
 import RegisterPage from "./RegisterPage";
 import PasswordPage from "./PasswordPage";
+import SettingList from "./SettingList";
 
 function App() {
 
@@ -83,6 +83,8 @@ function App() {
                                     <Route path="members/edit/:memberId" element={<MemberEdit />} />
                                     <Route path="members/add" element={<MemberAdd />} />
                                     <Route path="members/details/:memberId" element={<MemberDetails />} />
+
+                                    <Route path="settings" element={<SettingList />} />
                                 </Routes>
                             </div>
                         </>

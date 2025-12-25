@@ -1,7 +1,7 @@
 import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
 import {Book} from "./model/Book";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
+import api from "./config/AxiosConfig";
 import {Genre} from "./model/Genre";
 import BookForm from "./BookForm";
 import {BookResponse} from "./model/BookResponse";
@@ -10,18 +10,14 @@ export default function BookAdd() {
 
     const navigate = useNavigate();
     const formRef = useRef(null);
-    const [book, setBook] = useState<Book>({
-        id: "",
+    const [book, setBook] = useState<Partial<Book>>({
         name: "",
         author: "",
         genreId: null,
-        borrowedBy: null,
-        borrowedAt: null,
-        createdAt: ""
     });
 
     function postBook() {
-        axios.post("/api/books", book)
+        api.post("/books", book)
             .then(() => {
                 navigate("/admin/books")
             })

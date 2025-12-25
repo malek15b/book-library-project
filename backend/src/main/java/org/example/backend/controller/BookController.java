@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.example.backend.model.Book;
 import org.example.backend.model.BookDto;
 import org.example.backend.openLibrary.BookResponse;
-import org.example.backend.openLibrary.OpenLibraryResponse;
 import org.example.backend.service.BookService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,9 +33,9 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable String id) {
+    public ResponseEntity<String> delete(@PathVariable String id) {
         bookService.deleteById(id);
-        return "Book with id " + id + " was deleted";
+        return ResponseEntity.ok("Book was deleted successfully.");
     }
 
     @GetMapping("/{id}")

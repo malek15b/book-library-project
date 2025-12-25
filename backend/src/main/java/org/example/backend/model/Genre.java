@@ -1,9 +1,9 @@
 package org.example.backend.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record Genre(String id,
                     String name,
                     String color,
-                    LocalDateTime createdAt) {
+                    Instant createdAt) {
 }

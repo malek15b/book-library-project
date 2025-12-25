@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.example.backend.model.Genre;
 import org.example.backend.model.GenreDto;
 import org.example.backend.service.GenreService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +32,9 @@ public class GenreController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable String id) {
+    public ResponseEntity<String> delete(@PathVariable String id) {
         genreService.deleteById(id);
-        return "Genre with id " + id + " was deleted";
+        return ResponseEntity.ok("Genre was deleted successfully.");
     }
 
     @GetMapping("/{id}")

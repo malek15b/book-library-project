@@ -1,21 +1,19 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
 import {Genre} from "./model/Genre";
-import axios from "axios";
+import api from "./config/AxiosConfig";
 import GenreForm from "./GenreForm";
 
 export default function GenreAdd() {
     const navigate = useNavigate();
     const formRef = useRef(null);
-    const [genre, setGenre] = useState<Genre>({
-        id: "",
+    const [genre, setGenre] = useState<Partial<Genre>>({
         name: "",
         color: null,
-        createdAt: ""
     });
 
     function postGenre() {
-        axios.post(`/api/genres`, genre)
+        api.post(`/genres`, genre)
             .then(() => {
                 navigate("/admin/genres")
             })

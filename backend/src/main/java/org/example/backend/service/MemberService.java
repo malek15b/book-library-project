@@ -1,6 +1,7 @@
 package org.example.backend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.backend.exception.ErrorMessage;
 import org.example.backend.exception.IdNotFoundException;
 import org.example.backend.model.Book;
 import org.example.backend.model.Member;
@@ -48,6 +49,10 @@ public class MemberService {
         if (!memberRepository.existsById(id)) {
             throw new IdNotFoundException(id, "Member");
         }
+        List<Book> books = getBooksByMemberId(id);
+        if(!books.isEmpty()) {
+            throw new RuntimeException("Member with id " + id + " cannot be deleted");
+        }
         memberRepository.deleteById(id);
     }
 
@@ -55,6 +60,6 @@ public class MemberService {
         if (!memberRepository.existsById(id)) {
             throw new IdNotFoundException(id, "Member");
         }
-        return bookRepository.findByBorrowedByIs(id);
+        return bookRepository.findByBorrowedByIs(id, Sort.by(Sort.Direction.DESC, "borrowedAt"));
     }
 }

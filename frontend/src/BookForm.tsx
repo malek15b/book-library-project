@@ -6,7 +6,7 @@ import ISBNInput from "./ISBNInput";
 import {BookResponse} from "./model/BookResponse";
 
 type BookProps = {
-    book: Book,
+    book: Partial<Book>,
     handelSubmit: (event: FormEvent<HTMLFormElement>) => void,
     handelInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
     handelGenreChange: (e: ChangeEvent<HTMLSelectElement>, genre: Genre[]) => void,
