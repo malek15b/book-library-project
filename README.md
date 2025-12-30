@@ -2,7 +2,10 @@
 
 **BookLibrary** is a web application for managing books, genres, and members with an integrated borrowing feature.  
 Books can be added automatically via ISBN lookup or manually managed.  
-Future improvements include user roles, Multiple language support, import/export functionality, and customizable fields to make the app even more flexible and powerful.
+
+Future improvements include user roles, multiple language support, import/export functionality, 
+customizable fields, and AI-powered features such as RAG-based search and automated data categorization 
+to make the app even more flexible and powerful.
 
 This is a capstone project that is part of the Java Development Bootcamp at neuefische GmbH.
 
@@ -13,6 +16,7 @@ This is a capstone project that is part of the Java Development Bootcamp at neue
 - **Book, Genre and Member Management** – Add, edit, and delete books
 - **ISBN Lookup** – Automatically fill in book data using an external API
 - **Borrowing System** – Track book loans and returns
+- **Authentication** - JWT and GitHub
 
 ---
 
@@ -22,13 +26,14 @@ This is a capstone project that is part of the Java Development Bootcamp at neue
 - Multiple language support
 - CSV import and export
 - Custom fields for individual customization
+- AI Features – RAG-powered search and automatic categorization
 
 ---
 
 ## Tech Stack
 
 - **Frontend:** React, Vite, TypeScript, TailwindCSS
-- **Backend:** Java, Spring Boot, Spring Security, REST API
+- **Backend:** Java, Spring Boot, JWT, REST API
 - **Database:** MongoDB
 
 ---
