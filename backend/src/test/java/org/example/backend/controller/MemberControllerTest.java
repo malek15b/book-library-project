@@ -60,7 +60,6 @@ class MemberControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/members?active=true")
                 .with(oidcLogin()
                         .userInfoToken(token -> token.claim("login", "testUser"))
-                        .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
                 ))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(0));
@@ -81,7 +80,6 @@ class MemberControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/members?active=false")
                 .with(oidcLogin()
                         .userInfoToken(token -> token.claim("login", "testUser"))
-                        .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
                 ))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(2));

@@ -45,7 +45,6 @@ public class SecurityConfig {
                 .logout(l -> l.logoutSuccessUrl(host + "login"))
                 .oauth2Login(o -> o
                         .defaultSuccessUrl(host + "admin/books", true))
-                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // stateless
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .httpBasic(AbstractHttpConfigurer::disable);
 
