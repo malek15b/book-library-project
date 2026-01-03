@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${HOST_FRONTEND}")
+    @Value("${HOST_FRONTEND:/}")
     private String host;
 
     @Bean

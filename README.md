@@ -13,7 +13,7 @@ This is a capstone project that is part of the Java Development Bootcamp at neue
 
 ## Features
 
-- **Book, Genre and Member Management** – Add, edit, and delete books
+- **Book, Genre and Member Management** – Add, edit, and delete
 - **ISBN Lookup** – Automatically fill in book data using an external API
 - **Borrowing System** – Track book loans and returns
 - **Authentication** - JWT and GitHub
@@ -53,7 +53,6 @@ docker run -d -p 8080:8080 \
   --name <container-name> \
   -e GITHUB_ID=<your-github-id> \
   -e GITHUB_SECRET=<your-github-secret> \
-  -e HOST_FRONTEND=/ \
   -e MONGO_DB_URI=<your-mongo-db-uri> \
   <your-image>:latest
 ```
