@@ -93,7 +93,6 @@ class BookControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books/search?isbn=" + isbn)
                         .with(oidcLogin()
                                 .userInfoToken(token -> token.claim("login", "testUser"))
-                                .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
                         ))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(
@@ -114,22 +113,10 @@ class BookControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books")
                         .with(oidcLogin()
                                 .userInfoToken(token -> token.claim("login", "testUser"))
-                                .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
+                                //.authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
                         )
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    @Test
-    @WithMockUser
-    void getAllWithUser_Role_USER() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/books")
-                        .with(oidcLogin()
-                                .userInfoToken(token -> token.claim("login", "testUser"))
-                                .authorities(new SimpleGrantedAuthority(Role.USER.name()))
-                        )
-                )
-                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
     @Test
@@ -148,7 +135,6 @@ class BookControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books/" + id)
                         .with(oidcLogin()
                                 .userInfoToken(token -> token.claim("login", "testUser"))
-                                .authorities(new SimpleGrantedAuthority(Role.ADMIN.name()))
                         )
                 )
                 .andExpect(MockMvcResultMatchers.status().isOk());

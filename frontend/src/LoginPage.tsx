@@ -1,7 +1,28 @@
+import {Link, useNavigate} from "react-router-dom";
+import {useState} from "react";
+import axios from "axios";
+
 type LoginProps = {
     login: () => void
 }
 export default function LoginPage(props: LoginProps) {
+
+    const [username, setUsername] = useState("");
+    const navigate = useNavigate();
+
+    function exists() {
+        axios.post("/api/auth/exists", {
+            username: username
+        })
+            .then((res) => {
+                navigate("/" + res.data.redirect, {
+                    state: {
+                        username: username
+                    },
+                });
+            })
+            .catch(err => console.error(err));
+    }
 
     return (
         <>
@@ -29,16 +50,17 @@ export default function LoginPage(props: LoginProps) {
                             className="text-sm absolute px-3 font-medium text-gray-600 -translate-x-1/2 bg-white left-1/2">ODER</span>
                     </div>
 
-                    <form className="max-w-sm mx-auto">
+                    <div className="max-w-sm mx-auto">
                         <div className="mb-5 text-gray-700">
                             <label htmlFor="username" className="block mb-2 font-medium text-gray-600">
                                 E-Mail-Adresse</label>
-                            <input name={"username"} type="text" id="username" required/>
+                            <input onChange={(e) =>
+                                setUsername(e.target.value)} name={"username"} type="text" id="username" required/>
                         </div>
                         <div className="mb-5">
-                            <button className="flex w-full justify-center btn-primary">Weiter</button>
+                            <button onClick={() => exists()} className="flex w-full justify-center btn-primary">Weiter</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </>

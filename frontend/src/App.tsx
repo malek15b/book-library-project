@@ -1,4 +1,4 @@
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import BookList from "./BookList.js";
 import MenuBar from "./MenuBar.js";
 import LoginPage from "./LoginPage.js";
@@ -8,7 +8,7 @@ import GenreList from "./GenreList.js";
 import GenreEdit from "./GenreEdit.js";
 import GenreAdd from "./GenreAdd.js";
 
-import axios from "axios";
+import api from "./config/AxiosConfig";
 import {useEffect, useState} from "react";
 import ProtectedRoutes from "./ProtectedRoutes";
 import {appUser} from "./model/appUser";
@@ -17,11 +17,15 @@ import MemberEdit from "./MemberEdit";
 import MemberAdd from "./MemberAdd";
 import BookBorrow from "./BookBorrow";
 import MemberDetails from "./MemberDetails";
+import RegisterPage from "./RegisterPage";
+import PasswordPage from "./PasswordPage";
 import SettingList from "./SettingList";
+import {Navigate} from "react-router";
 
 function App() {
 
     const [user, setUser] = useState<appUser>(undefined)
+    const navigate = useNavigate();
 
     function login() {
         const host: string = window.location.host === "localhost:5173" ?
@@ -30,15 +34,19 @@ function App() {
     }
 
     function logout() {
+        localStorage.removeItem("token");
         const host: string = window.location.host === "localhost:5173" ?
             "http://localhost:8080" : window.location.origin;
         window.open(host + '/logout', '_self');
     }
 
     const loadUser = () => {
-        axios.get('/api/auth/me')
+        api.get('/auth/me')
             .then(response => {
                 setUser(response.data)
+                if(response.data) {
+                    navigate('/admin/books')
+                }
             })
             .catch(() => setUser(null))
     }
@@ -50,7 +58,9 @@ function App() {
     return (
         <Routes>
             <Route path="/login" element={<LoginPage login={login} />} />
-            <Route path="/" element={<LoginPage login={login} />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/password" element={<PasswordPage />} />
+            <Route path="/" element={<Navigate to={user ? "/admin/books" : "/login"} replace />} />
 
             <Route element={<ProtectedRoutes user={user} />}>
                 <Route

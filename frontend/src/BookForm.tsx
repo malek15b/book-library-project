@@ -4,6 +4,7 @@ import {Book} from "./model/Book";
 import axios from "axios";
 import ISBNInput from "./ISBNInput";
 import {BookResponse} from "./model/BookResponse";
+import api from "./config/AxiosConfig";
 
 type BookProps = {
     book: Partial<Book>,
@@ -21,7 +22,7 @@ export default function BookForm(props: BookProps) {
     const [subjects, setSubjects] = useState<string[]>([]);
 
     useEffect(() => {
-        axios.get("/api/genres")
+        api.get("/genres")
             .then((res) => setGenres(res.data))
             .catch((err) => console.error("Error Loading:", err));
     }, []);
